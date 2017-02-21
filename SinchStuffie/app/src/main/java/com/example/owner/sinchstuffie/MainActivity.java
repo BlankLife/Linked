@@ -1,64 +1,47 @@
 package com.example.owner.sinchstuffie;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.content.ComponentName;
 import android.os.Bundle;
-import com.sinch.android.rtc.ClientRegistration;
-import com.sinch.android.rtc.Sinch;
-import com.sinch.android.rtc.SinchClient;
-import com.sinch.android.rtc.SinchClientListener;
-import com.sinch.android.rtc.SinchError;
-import com.sinch.android.rtc.messaging.MessageClient;
-import com.sinch.android.rtc.messaging.WritableMessage;
 
-public class MainActivity extends AppCompatActivity {
+import static android.content.Context.BIND_AUTO_CREATE;
 
+public abstract class MainActivity extends Activity implements ServiceConnection {
+    private SinchService.SinchServiceInterface mSinchServiceInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        android.content.Context context = this.getApplicationContext();
+        getApplicationContext().bindService(new Intent(this, SinchService.class), this,
+                BIND_AUTO_CREATE);
+    }
+    @Override
+    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+        if (SinchService.class.getName().equals(componentName.getClassName())) {
+            mSinchServiceInterface = (SinchService.SinchServiceInterface) iBinder;
+            onServiceConnected();
+        }
+    }
 
-        SinchClient sinchClient = Sinch.getSinchClientBuilder().context(context)
-                .applicationKey("52f37bcc-5c85-4124-9f00-b4e1bf6bc696")
-                .applicationSecret("wu5VaCwnb0KyyXazW6JnXw==")
-                .environmentHost("sandbox.sinch.com")
-                .userId("lui.frankie.c@gmail.com")
-                .build();
-        sinchClient.setSupportMessaging(true);
-        sinchClient.start();
+    @Override
+    public void onServiceDisconnected(ComponentName componentName) {
+        if (SinchService.class.getName().equals(componentName.getClassName())) {
+            mSinchServiceInterface = null;
+            onServiceDisconnected();
+        }
+    }
 
-        MessageClient messageClient = sinchClient.getMessageClient();
-        WritableMessage message = new WritableMessage("someRecipientUserId", "Hello someRecipientUserId!");
-        sinchClient.addSinchClientListener(new SinchClientListener() {
-            @Override
-            public void onClientStarted(SinchClient sinchClient) {
-                sinchClient.startListeningOnActiveConnection();
-            }
+    protected void onServiceConnected() {
+        // for subclasses
+    }
 
-            @Override
-            public void onClientStopped(SinchClient sinchClient) {
+    protected void onServiceDisconnected() {
+        // for subclasses
+    }
 
-            }
-
-            @Override
-            public void onClientFailed(SinchClient sinchClient, SinchError sinchError) {
-
-            }
-
-            @Override
-            public void onRegistrationCredentialsRequired(SinchClient sinchClient, ClientRegistration clientRegistration) {
-
-            }
-
-            @Override
-            public void onLogMessage(int level, String area, String message) {
-
-            }
-        });
-
-        messageClient.send(message);
-        //messageClient.addMessageClientListener();
-        sinchClient.stopListeningOnActiveConnection();
-        sinchClient.terminate();
+    protected SinchService.SinchServiceInterface getSinchServiceInterface() {
+        return mSinchServiceInterface;
     }
 }
