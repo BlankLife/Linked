@@ -46,34 +46,6 @@
 
     <EditText
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/username"
-        android:ems="10"
-        android:id="@+id/userText"
-        android:background="@android:color/white"
-        android:layout_below="@+id/uploadPicButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:textSize="16sp"
-        android:layout_width="260dp" />
-
-    <EditText
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/full"
-        android:ems="10"
-        android:id="@+id/nameText2"
-        android:fontFamily="sans-serif"
-        android:background="@android:color/white"
-        android:textSize="16sp"
-        android:layout_width="260dp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/userText"
-        android:layout_alignLeft="@+id/userText"
-        android:layout_alignStart="@+id/userText" />
-
-    <EditText
-        android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint="@string/email"
         android:ems="10"
@@ -155,5 +127,33 @@
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/username"
+        android:ems="10"
+        android:id="@+id/userText"
+        android:background="@android:color/white"
+        android:layout_marginTop="17dp"
+        android:textSize="16sp"
+        android:layout_width="260dp"
+        android:layout_below="@+id/uploadPicButton"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/full"
+        android:ems="10"
+        android:id="@+id/nameText2"
+        android:fontFamily="sans-serif"
+        android:background="@android:color/white"
+        android:textSize="16sp"
+        android:layout_width="260dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/userText"
+        android:layout_alignLeft="@+id/userText"
+        android:layout_alignStart="@+id/userText" />
 
 </RelativeLayout>
