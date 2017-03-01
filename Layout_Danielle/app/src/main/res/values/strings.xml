@@ -18,6 +18,8 @@
     <string name="user">User</string>
     <string name="user_create">User Account Creation</string>
     <string name="username">Username</string>
+    <string name="auth_failed">Authentication failed</string>
+
 
     <string-array name="business_type_array">
         <item name="business_title">Business Type</item>

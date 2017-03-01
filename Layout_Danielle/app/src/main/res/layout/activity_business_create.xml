@@ -21,17 +21,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_camera"
-        android:layout_marginTop="14dp"
-        android:id="@+id/imageButton2"
-        android:scaleX="2"
-        android:scaleY="2"
-        android:layout_below="@+id/businessTitle"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:text="@string/upload_pic"
         android:layout_width="wrap_content"
@@ -115,21 +104,6 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="@string/password"
-        android:ems="10"
-        android:background="@android:color/white"
-        android:layout_marginTop="13dp"
-        android:id="@+id/passText"
-        android:fontFamily="sans-serif"
-        android:layout_below="@+id/businessSpinner"
-        android:layout_alignLeft="@+id/passText2"
-        android:layout_alignStart="@+id/passText2"
-        android:textSize="16sp"/>
-
-    <EditText
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
         android:hint="@string/password_confirm"
         android:ems="10"
         android:background="@android:color/white"
@@ -151,5 +125,31 @@
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:layout_marginTop="17dp"
+        android:id="@+id/imageButton2"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:layout_below="@+id/businessTitle"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:ems="10"
+        android:background="@android:color/white"
+        android:layout_marginTop="13dp"
+        android:id="@+id/passText"
+        android:fontFamily="sans-serif"
+        android:textSize="16sp"
+        android:layout_below="@+id/businessSpinner"
+        android:layout_alignLeft="@+id/passText2"
+        android:layout_alignStart="@+id/passText2" />
 
 </RelativeLayout>

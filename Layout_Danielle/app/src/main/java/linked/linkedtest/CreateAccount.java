@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
+import static android.R.id.button2;
+import static android.R.id.button3;
+
 public class CreateAccount extends AppCompatActivity {
 
     @Override
@@ -13,21 +16,19 @@ public class CreateAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        //        User button from Create Account screen
-        Button button2 = (Button) findViewById(R.id.userButton);
-        button2.setOnClickListener(new View.OnClickListener(){
+        //        User Account button from Create Account screen to User Create screen
+        Button userAcc = (Button) findViewById(R.id.userButton);
+        userAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Intent i = new Intent(CreateAccount.this, UserCreate.class);
-                startActivity(i);
+                startActivity(new Intent(CreateAccount.this, UserCreate.class));
             }
         });
 
-        //        Business button from Create Account screen
-        Button button3 = (Button) findViewById(R.id.businessButton);
-        button3.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent i = new Intent(CreateAccount.this, BusinessCreate.class);
-                startActivity(i);
+        //        Business Account button from Create Account screen to Business Create screen
+        Button businessAcc = (Button) findViewById(R.id.businessButton);
+        businessAcc.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                startActivity(new Intent(CreateAccount.this, BusinessCreate.class));
             }
         });
     }
