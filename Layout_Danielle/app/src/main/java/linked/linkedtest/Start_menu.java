@@ -1,13 +1,12 @@
 package linked.linkedtest;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,11 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import static android.R.attr.onClick;
-import static android.R.id.button1;
-import static linked.linkedtest.R.id.signupButton;
-import static linked.linkedtest.R.id.usernameField;
 
 public class Start_menu extends AppCompatActivity {
 
@@ -64,7 +58,6 @@ public class Start_menu extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (R.id.usernameField != null || R.id.passwordField)
                     userLogin();
             }
         });
@@ -74,8 +67,8 @@ public class Start_menu extends AppCompatActivity {
         final EditText username = (EditText) findViewById(R.id.usernameField);
         final EditText password = (EditText) findViewById(R.id.passwordField);
 
-        String user = username.getText().toString();
-        String pass = password.getText().toString();
+        String user = username.getText().toString().trim();
+        String pass = password.getText().toString().trim();
 
         mAuth.signInWithEmailAndPassword(user, pass)
                 .addOnCompleteListener(Start_menu.this, new OnCompleteListener<AuthResult>() {

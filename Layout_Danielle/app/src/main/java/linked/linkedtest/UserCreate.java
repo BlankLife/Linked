@@ -145,6 +145,7 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task){
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        startActivity(new Intent(UserCreate.this, BusinessActivities.class));
                         if (!task.isSuccessful()) {
                             Toast.makeText(UserCreate.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                         }

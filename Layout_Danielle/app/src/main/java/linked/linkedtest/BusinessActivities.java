@@ -1,5 +1,7 @@
 package linked.linkedtest;
 
+import linked.linkedtest.R.*;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +25,8 @@ public class BusinessActivities extends AppCompatActivity implements AdapterView
         category_spinner.setOnItemSelectedListener(BusinessActivities.this);
 
     }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
