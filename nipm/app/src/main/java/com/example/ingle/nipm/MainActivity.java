@@ -7,14 +7,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     private EditText fname;
     private EditText lname;
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void addData(View view){
 
+        Person x = new Person();
+
         fname = (EditText) findViewById(R.id.fname);
         lname = (EditText) findViewById(R.id.lname);
         emailaddress = (EditText) findViewById(R.id.eaddress);
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         genericInfo.put("Email Address", emailaddress_string);
 
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        root.child("users").child(id_string).updateChildren(genericInfo);
+        //root.child("users").child(id_string).updateChildren(genericInfo);
 
         phonenumber = (EditText) findViewById(R.id.pnumber);
         age = (EditText) findViewById(R.id.age);
@@ -68,17 +75,46 @@ public class MainActivity extends AppCompatActivity {
         personalInfo.put("Age", age_string);
         personalInfo.put("Date of Birth", dob_string);
         personalInfo.put("Gender", gender_string);
-        root.child("users").child(id_string).child("Personal Information").updateChildren(personalInfo);
+        //root.child("users").child(id_string).child("Personal Information").updateChildren(personalInfo);
+
+        x.f = fname_string;
+        x.l = lname_string;
+        x.e = emailaddress_string;
+        x.pi.a = age_string;
+        x.pi.bd = dob_string;
+        x.pi.g = gender_string;
+        x.pi.ph = phonenumber_string;
+
+        Map<String, Object> info = new HashMap<String, Object>();
+        info.put(id_string, x);
+        root.child("users").child(id_string).setValue(x);
+
+        Log.v("FIRST NAME", x.f);
+        Log.v("LAST NAME", x.l);
 
     }
 
     public void getData(View view){
 
         DatabaseReference userList = FirebaseDatabase.getInstance().getReference().child("users");
+        /*userList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
+                for (DataSnapshot child : children) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*/
         Query mee = userList.equalTo("1234");
         //mee.toString();
-        Log.v("data retrieval",mee);
+        //Log.v("data retrieval",mee);
 
 
     }
