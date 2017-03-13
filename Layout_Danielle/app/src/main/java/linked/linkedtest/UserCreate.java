@@ -62,18 +62,17 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
             }
         };
 
-
-        adapter = ArrayAdapter.createFromResource(this, R.array.month_array, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.month_array, R.layout.spinner_layout);
         month_spinner = (Spinner) findViewById(R.id.monthSpinner);
         month_spinner.setAdapter(adapter);
         month_spinner.setOnItemSelectedListener(UserCreate.this);
 
-        adapter = ArrayAdapter.createFromResource(this, R.array.year_array, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.year_array, R.layout.spinner_layout);
         year_spinner = (Spinner) findViewById(R.id.yearSpinner);
         year_spinner.setAdapter(adapter);
         year_spinner.setOnItemSelectedListener(UserCreate.this);
 
-        adapter = ArrayAdapter.createFromResource(this, R.array.gender_array, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.gender_array, R.layout.spinner_layout);
         gender_spinner = (Spinner) findViewById(R.id.genderSpinner);
         gender_spinner.setAdapter(adapter);
         gender_spinner.setOnItemSelectedListener(UserCreate.this);
@@ -116,8 +115,8 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        TextView spinnerDialogText = (TextView) view;
-        Toast.makeText(this, spinnerDialogText.getText(), Toast.LENGTH_SHORT).show();
+/*        TextView spinnerDialogText = (TextView) view;
+        Toast.makeText(this, spinnerDialogText.getText(), Toast.LENGTH_SHORT).show();*/
     }
 
     @Override

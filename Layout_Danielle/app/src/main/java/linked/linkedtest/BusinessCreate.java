@@ -56,7 +56,7 @@ public class BusinessCreate extends AppCompatActivity implements AdapterView.OnI
             }
         };
 
-        adapter = ArrayAdapter.createFromResource(this, R.array.business_type_array, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.business_type_array, R.layout.spinner_layout);
         business_spinner = (Spinner) findViewById(R.id.businessSpinner);
         business_spinner.setAdapter(adapter);
         business_spinner.setOnItemSelectedListener(BusinessCreate.this);
