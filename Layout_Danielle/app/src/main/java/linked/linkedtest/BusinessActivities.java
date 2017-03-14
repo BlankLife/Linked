@@ -2,6 +2,7 @@ package linked.linkedtest;
 
 import linked.linkedtest.R.*;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class BusinessActivities extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
+import linked.linkedtest.MultiSelectionSpinner;
+public class BusinessActivities extends AppCompatActivity implements AdapterView.OnItemSelectedListener, MultiSelectionSpinner.OnMultipleItemsSelectedListener{
 
     Spinner category_spinner;
     ArrayAdapter adapter;
@@ -24,6 +31,11 @@ public class BusinessActivities extends AppCompatActivity implements AdapterView
         category_spinner.setAdapter(adapter);
         category_spinner.setOnItemSelectedListener(BusinessActivities.this);
 
+        MultiSelectionSpinner spinner = (MultiSelectionSpinner) findViewById(id.activitySpinner);
+
+        String[] array = {"Biking", "Skating", "Running", "Basketball", "Baseball", "Football", "Soccer", "Video Games", "Dancing"};
+        spinner.setItems(array);
+        spinner.setListener(this);
     }
 
 
@@ -37,5 +49,17 @@ public class BusinessActivities extends AppCompatActivity implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void selectedIndices(List<Integer> indices) {
+
+    }
+
+    @Override
+    public void selectedStrings(List<String> strings) {
+        /*Toast.makeText(this, strings.toString(), Toast.LENGTH_LONG).show();
+
+         */
     }
 }
