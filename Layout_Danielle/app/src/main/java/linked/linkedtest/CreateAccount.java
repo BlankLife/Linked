@@ -32,4 +32,10 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
     }
+
+    public void visitMenu(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+    }
 }

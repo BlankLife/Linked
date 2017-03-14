@@ -3,13 +3,14 @@
     package="linked.linkedtest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/cooldog_icon_new"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Start_menu">
+        <activity android:name=".Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +20,12 @@
         <activity android:name=".CreateAccount" />
         <activity android:name=".UserCreate" />
         <activity android:name=".BusinessCreate" />
-        <activity android:name=".BusinessActivities"></activity>
+        <activity android:name=".BusinessActivities" />
+        <activity android:name=".Menu" />
+        <activity android:name=".LinkLocation" />
+        <activity android:name=".LinkInterests" />
+        <activity android:name=".LinkPeople" />
+        <activity android:name=".LinkPeopleRVActivity"></activity>
     </application>
 
 </manifest>

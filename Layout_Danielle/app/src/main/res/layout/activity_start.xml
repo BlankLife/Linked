@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/light_gray"
-    tools:context="linked.linkedtest.Start_menu">
+    tools:context="linked.linkedtest.Start">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
         android:textAllCaps="false"
         android:backgroundTint="@color/prim_blue"
         android:textColor="@android:color/white"
-        android:layout_below="@+id/passwordField"
+        android:layout_above="@+id/noAccountText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:onClick="checkLogin"/>
