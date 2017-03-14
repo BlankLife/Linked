@@ -28,11 +28,11 @@
         android:layout_marginTop="45dp"
         android:id="@+id/categorySpinner" />
 
-    <Spinner
-        android:layout_width="match_parent"
+    <linked.linkedtest.MultiSelectionSpinner
+        android:id="@+id/activitySpinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:layout_below="@+id/categorySpinner"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
-        android:id="@+id/activitySpinner" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
