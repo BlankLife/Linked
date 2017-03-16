@@ -75,7 +75,7 @@ public class Start extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        startActivity(new Intent(Start.this, BusinessActivities.class));
+                        startActivity(new Intent(Start.this, Menu.class));
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -84,6 +84,9 @@ public class Start extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(Start.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+                            /*  If sign in fails, stay in the same page
+                                For testing purposes (since we don't have a DB yet) it goes to Menu page*/
+                            startActivity(new Intent(Start.this, BusinessActivities.class));
                         }
                     }
                 });

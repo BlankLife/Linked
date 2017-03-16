@@ -1,4 +1,5 @@
 <resources>
+    <string name="auth_failed">Authentication failed</string>
     <string name="business">Business</string>
     <string name="business_create">Business Account Creation</string>
     <string name="business_address">Business Address</string>
@@ -18,7 +19,6 @@
     <string name="user">User</string>
     <string name="user_create">User Account Creation</string>
     <string name="username">Username</string>
-    <string name="auth_failed">Authentication failed</string>
 
 
     <string-array name="business_type_array">
@@ -67,14 +67,38 @@
     </string-array>
 
     <string-array name="category_array">
-        <item name="category_title">Category</item>
+        <item name="category_title">Choose a Category</item>
         <item name="art">Art</item>
         <item name="food">Food</item>
         <item name="indoors">Indoors</item>
-        <item name="languages">Languages</item>
-        <item name="outdoors">Outdoors</item>
-        <item name="pets">Pets</item>
         <item name="sports">Sports</item>
     </string-array>
 
+    <string-array name="art_array">
+        <item name="activity_title">Choose an activity</item>
+        <item name="film">Film</item>
+        <item name="music">Music</item>
+        <item name="painting">Painting</item>
+    </string-array>
+
+    <string-array name="food_array">
+        <item name="activity_title">Choose an activity</item>
+        <item name="bar">Bars</item>
+        <item name="dinner">Dinner</item>
+        <item name="contest">Eating Contests</item>
+    </string-array>
+
+    <string-array name="indoors_array">
+        <item name="activity_title">Choose an activity</item>
+        <item name="board_games">Board Games</item>
+        <item name="video_games">Video Games</item>
+        <item name="yoga">Yoga</item>
+    </string-array>
+
+    <string-array name="sports_array">
+        <item name="activity_title">Choose an activity</item>
+        <item name="basketball">Basketball</item>
+        <item name="biking">Biking</item>
+        <item name="dancing">Dancing</item>
+    </string-array>
 </resources>

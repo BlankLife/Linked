@@ -33,7 +33,7 @@ public class MultiSelectionSpinner extends Spinner implements
         super(context);
 
         simple_adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item);
+                R.layout.spinner_layout_blue);
         super.setAdapter(simple_adapter);
     }
 
@@ -41,7 +41,7 @@ public class MultiSelectionSpinner extends Spinner implements
         super(context, attrs);
 
         simple_adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item);
+                R.layout.spinner_layout_blue);
         super.setAdapter(simple_adapter);
     }
 
