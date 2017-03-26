@@ -126,7 +126,8 @@
         android:backgroundTint="@color/prim_blue"
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="submit_Button"/>
 
     <EditText
         android:layout_height="wrap_content"

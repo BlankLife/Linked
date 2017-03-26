@@ -21,6 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static linked.linkedtest.R.string.user;
@@ -90,13 +95,13 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
         });
 
         //Submit button from User create screen
-        Button submitButton = (Button) findViewById(R.id.submitButton);
+        /*Button submitButton = (Button) findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 userCreate();
             }
-        });
+        });*/
     }
 
     @Override
@@ -150,5 +155,54 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
                         }
                     }
                 });
+    }
+
+
+    public void submit_Button(View view) {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+
+        User_CLASS newUser = new User_CLASS();
+
+        // Initialize view objects
+        final EditText username = (EditText) findViewById(R.id.userText);
+        final EditText fullname = (EditText) findViewById(R.id.nameText2);
+        final EditText email = (EditText) findViewById(R.id.emailText2);
+        final EditText password = (EditText) findViewById(R.id.passText2);
+        final EditText confirm = (EditText) findViewById(R.id.cPassText2);
+
+
+        newUser.username = username.getText().toString().trim();
+        newUser.fullname = fullname.getText().toString().trim();
+        newUser.emailaddress =
+        newUser.password = password.getText().toString().trim();
+        newUser.month = month_spinner.getSelectedItem().toString();
+        newUser.year = year_spinner.getSelectedItem().toString();
+        newUser.gender = gender_spinner.getSelectedItem().toString();
+
+
+        Map<String, Object> user_info = new HashMap<String, Object>();
+        user_info.put(email.getText().toString().trim(), newUser);
+        root.child("User_Accounts").updateChildren(user_info);
+        root.child("All_Accounts").updateChildren(user_info);
+        // Error Check if all fields are complete
+        if (password != confirm) {
+            // Throw error
+        }
+
+        String user = email.getText().toString().trim();
+        String pass = password.getText().toString().trim();
+
+        // Create user with FirebaseAuth here
+        /*mAuth.createUserWithEmailAndPassword(user, pass)
+                .addOnCompleteListener(UserCreate.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task){
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        startActivity(new Intent(UserCreate.this, BusinessActivities.class));
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(UserCreate.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
+                        }
+            });*/
+
     }
 }

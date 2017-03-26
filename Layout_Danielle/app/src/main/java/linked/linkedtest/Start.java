@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Start extends AppCompatActivity {
 
@@ -41,6 +43,7 @@ public class Start extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
                 // ...
+
             }
         };
 
@@ -49,6 +52,7 @@ public class Start extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(Start.this, CreateAccount.class));
             }
         });

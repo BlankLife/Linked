@@ -17,12 +17,12 @@ public class CreateAccount extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         //        User Account button from Create Account screen to User Create screen
-        Button userAcc = (Button) findViewById(R.id.userButton);
+        /*Button userAcc = (Button) findViewById(R.id.userButton);
         userAcc.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 startActivity(new Intent(CreateAccount.this, UserCreate.class));
             }
-        });
+        });*/
 
         //        Business Account button from Create Account screen to Business Create screen
         Button businessAcc = (Button) findViewById(R.id.businessButton);
@@ -37,5 +37,9 @@ public class CreateAccount extends AppCompatActivity {
         // Do something in response to button
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
+    }
+
+    public void user_ButtonClick(View view){
+        startActivity(new Intent(CreateAccount.this, UserCreate.class));
     }
 }

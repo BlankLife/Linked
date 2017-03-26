@@ -20,7 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class BusinessCreate extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -114,6 +118,20 @@ public class BusinessCreate extends AppCompatActivity implements AdapterView.OnI
         final EditText password = (EditText) findViewById(R.id.passText);
         final EditText confirm = (EditText) findViewById(R.id.cPassText);
 
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        Business_CLASS newBusiness = new Business_CLASS();
+
+        newBusiness.owner = fullname.getText().toString().trim();
+        newBusiness.emailaddress = email.getText().toString().trim();
+        newBusiness.business_name = business.getText().toString().trim();
+        newBusiness.business_address = address.getText().toString().trim();
+        newBusiness.password = password.getText().toString().trim();
+
+        Map<String, Object> business_info = new HashMap<String, Object>();
+        business_info.put(email.getText().toString().trim(), newBusiness);
+        root.child("Business_Accounts").updateChildren(business_info);
+        root.child("All_Accounts").updateChildren(business_info);
+
         if (password != confirm) {
             //Throw error for this if all fields are filled
         }
@@ -122,7 +140,7 @@ public class BusinessCreate extends AppCompatActivity implements AdapterView.OnI
         String pass = password.getText().toString().trim();
 
         // Create user with FirebaseAuth here
-        mAuth.createUserWithEmailAndPassword(user, pass)
+        /*mAuth.createUserWithEmailAndPassword(user, pass)
                 .addOnCompleteListener(BusinessCreate.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task){
@@ -132,7 +150,7 @@ public class BusinessCreate extends AppCompatActivity implements AdapterView.OnI
                             Toast.makeText(BusinessCreate.this, R.string.auth_failed, Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
 
     }
 }
