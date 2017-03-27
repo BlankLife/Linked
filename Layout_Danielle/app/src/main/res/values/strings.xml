@@ -4,9 +4,9 @@
     <string name="business_create">Business Account Creation</string>
     <string name="business_address">Business Address</string>
     <string name="business_name">Business Name</string>
-    <string name="account_type">Choose an account type</string>
+    <string name="account_type">Choose an account type.</string>
     <string name="password_confirm">Confirm Password</string>
-    <string name="no_account">Dont have an account?</string>
+    <string name="no_account">Don\'t have an account?</string>
     <string name="email">Email Address</string>
     <string name="full">Full Name</string>
     <string name="app_name">Linked</string>
