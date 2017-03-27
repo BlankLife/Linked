@@ -2,6 +2,7 @@ package linked.linkedtest;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
@@ -15,6 +16,8 @@ public class CreateAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+
 
         //        User Account button from Create Account screen to User Create screen
         /*Button userAcc = (Button) findViewById(R.id.userButton);

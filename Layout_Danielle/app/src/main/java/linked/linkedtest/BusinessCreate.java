@@ -38,10 +38,13 @@ public class BusinessCreate extends AppCompatActivity implements AdapterView.OnI
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    userID_CLASS user_object = userID_CLASS.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_create);
+
 
         //Initialize Firebase Object
         mAuth = FirebaseAuth.getInstance();
@@ -131,6 +134,8 @@ public class BusinessCreate extends AppCompatActivity implements AdapterView.OnI
         business_info.put(email.getText().toString().trim(), newBusiness);
         root.child("Business_Accounts").updateChildren(business_info);
         root.child("All_Accounts").updateChildren(business_info);
+
+        startActivity(new Intent(BusinessCreate.this, BusinessActivities.class));
 
         if (password != confirm) {
             //Throw error for this if all fields are filled

@@ -24,10 +24,14 @@ public class Start extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "EmailPassword";
 
+    userID_CLASS user_object = userID_CLASS.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+
 
         //Initialize Firebase Object
         mAuth = FirebaseAuth.getInstance();
@@ -52,7 +56,7 @@ public class Start extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Log.v("page 1.5: ", user_object.getEmail());
                 startActivity(new Intent(Start.this, CreateAccount.class));
             }
         });
