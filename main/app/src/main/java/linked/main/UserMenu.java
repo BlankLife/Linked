@@ -12,8 +12,6 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
 
     TextView signout_button;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +25,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
             String name = current_user.getDisplayName();
             String email = current_user.getEmail();
             Uri photoUrl = current_user.getPhotoUrl;
-
-           // The user's ID, unique to the Firebase project. Do NOT use this value to
-           // authenticate with your backend server, if you have one. Use
-           // FirebaseUser.getToken() instead.
-            String uid = current_user.getUid();
+            String uid = current_user.getUid();           // The user's ID, unique to the Firebase project.
         }*/
 
         signout_button = (TextView) findViewById(R.id.signoutButton);
@@ -44,6 +38,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(UserMenu.this, Start.class));
         }
+        //...
 
     }
 

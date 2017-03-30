@@ -1,6 +1,8 @@
 <resources>
     <string name="auth_failed">Incorrect email or password</string>
     <string name="create_user_failed">Email already in use</string>
+    <string name="empty_field">Missing required information</string>
+    <string name="pw_mismatch">Password mismatch</string>
     <string name="business">Business</string>
     <string name="business_create">Business Account Creation</string>
     <string name="business_address">Business Address</string>

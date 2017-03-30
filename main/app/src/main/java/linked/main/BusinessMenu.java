@@ -2,40 +2,43 @@ package linked.main;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ListView;
+
 import java.util.ArrayList;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.util.List;
 
 
 /**
  * Created by Kyle on 3/27/2017.
  */
 
-public class BusinessMain extends AppCompatActivity implements View.OnClickListener{
+public class BusinessMenu extends AppCompatActivity implements View.OnClickListener{
 
     /* We need to get a reference to the User who logged in, in order to get the correct information
        from the Database.
       ******* Requires interactions with the Database.
      */
+
+    /*
+    In reply above,
+        //An example to access current user's information
+        FirebaseUser current_user;
+        current_user = FirebaseAuth.getInstance().getCurrentUser();
+        if (current_user != null){
+            String name = current_user.getDisplayName();
+            String email = current_user.getEmail();
+            Uri photoUrl = current_user.getPhotoUrl;
+            String uid = current_user.getUid();           // The user's ID, unique to the Firebase project.
+     }
+     */
+
+    // We will also need a signout button from this menu for authentication to not mess up.
 
     protected Button selectActivitiesBtn;
     protected Button editBusinessBtn;
@@ -50,7 +53,7 @@ public class BusinessMain extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_main);
+        setContentView(R.layout.activity_business_menu);
         nameText = "Some Business";                             //******Retrieve Business Name from Database HERE
         addressText = "Some Address";                           //******Retrieve Business Address from Database HERE
         businessName = (TextView) findViewById(R.id.businessName);
@@ -60,10 +63,10 @@ public class BusinessMain extends AppCompatActivity implements View.OnClickListe
         businessAddress.setText(addressText);
 
         editBusinessBtn = (Button) findViewById(R.id.editBusiness);
-        editBusinessBtn.setOnClickListener((View.OnClickListener) this);
+        editBusinessBtn.setOnClickListener(this);
 
         selectActivitiesBtn = (Button) findViewById(R.id.viewEditActs);
-        selectActivitiesBtn.setOnClickListener((View.OnClickListener) this);
+        selectActivitiesBtn.setOnClickListener(this);
 
         for (int i = 0; i < activity.length; i++) {
             selectedActivities.add(activity[i]);
@@ -171,7 +174,7 @@ public class BusinessMain extends AppCompatActivity implements View.OnClickListe
                             selectedActivities.add(tAct);
                             activity = new String[selectedActivities.size()];
                             activity = selectedActivities.toArray(activity);
-                                                                                        //******Store Updated Array of Activities to go to Database GOES HERE
+                            //******Store Updated Array of Activities to go to Database GOES HERE
                         }
                         onChangeSelectedActivities();                       //Temp
                     }
@@ -181,7 +184,7 @@ public class BusinessMain extends AppCompatActivity implements View.OnClickListe
                     public void onClick(DialogInterface dialog, int id) {
                         activity = new String[selectedActivities.size()];
                         activity = selectedActivities.toArray(activity);
-                                                                                        //******Store Updated Array of Activities into Database GOES HERE
+                        //******Store Updated Array of Activities into Database GOES HERE
                         dialog.dismiss();
                     }
                 });
@@ -189,4 +192,3 @@ public class BusinessMain extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 }
-

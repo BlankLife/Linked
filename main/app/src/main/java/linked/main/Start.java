@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -84,31 +85,29 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
         String user = username.getText().toString().trim();
         String pass = password.getText().toString().trim();
 
-        // Create user with FirebaseAuth here
-        mAuth.signInWithEmailAndPassword(user, pass)
-                .addOnCompleteListener(Start.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+        //Error check for empty boxes
+        if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass))
+            Toast.makeText(Start.this, R.string.empty_field, Toast.LENGTH_SHORT).show();
+        else {
+            // Create user with FirebaseAuth here
+            mAuth.signInWithEmailAndPassword(user, pass)
+                    .addOnCompleteListener(Start.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("EmailPassword", "signInWithEmail:failed", task.getException());
+                                Toast.makeText(Start.this, R.string.auth_failed,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("EmailPassword", "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w("EmailPassword", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(Start.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
+                                //Retrieve "account_type" from database and choose which activity to go to.
+                                startActivity(new Intent(Start.this, UserMenu.class));
+                                //startActivity(new Intent(Start.this, BusinessMenu.class));
+                            }
                         }
-
-                        else {
-                            /* Need to differentiate between Regular User and Business Owner.
-                               Logging in now temporarily only goes to the Business Menu.
-                               This requires interactions with Database.
-                             */
-                            Log.d("EmailPassword", "signInWithEmail:onComplete:" + task.isSuccessful());
-                            startActivity(new Intent(Start.this, BusinessMain.class));
-                        }
-                    }
-                });
+                    });
+        }
     }
 
 }

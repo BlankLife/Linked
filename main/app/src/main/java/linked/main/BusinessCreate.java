@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BusinessCreate extends AppCompatActivity implements View.OnClickListener{
 
@@ -69,9 +75,8 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+        if (mAuthListener != null)
             mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
     @Override
@@ -88,48 +93,41 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void businessCreateAuth(){
+    private void businessCreateAuth() {
+        String owner = fullname.getText().toString().trim();
         String user = email.getText().toString().trim();
+        String business_name = business.getText().toString().trim();
+        String business_address = address.getText().toString().trim();
         String pass = password.getText().toString().trim();
+        String pass1 = confirm.getText().toString().trim();
 
-        mAuth.createUserWithEmailAndPassword(user, pass)
-                .addOnCompleteListener(BusinessCreate.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task){
-                        if (!task.isSuccessful()) {
-                            Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
-                            Toast.makeText(BusinessCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
+        //Error Check for empty boxes
+        if (TextUtils.isEmpty(owner) || TextUtils.isEmpty(user) || TextUtils.isEmpty(business_name) ||
+                TextUtils.isEmpty(business_address) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(pass1))
+            Toast.makeText(BusinessCreate.this, R.string.empty_field, Toast.LENGTH_SHORT).show();
+        else if (!pass.equals(pass1))
+            Toast.makeText(BusinessCreate.this, R.string.pw_mismatch, Toast.LENGTH_SHORT).show();
+        else {
+            mAuth.createUserWithEmailAndPassword(user, pass)
+                    .addOnCompleteListener(BusinessCreate.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
+                                Toast.makeText(BusinessCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                                businessCreateDB(task.getResult().getUser());
+                            }
                         }
-
-                        else {
-                            Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            businessCreateDB();
-                        }
-
-                    }
-                });
+                    });
+        }
     }
 
-    private void businessCreateDB(){
-        /* An example to access current user's information
-        FirebaseUser current_user;
-        current_user = FirebaseAuth.getInstance().getCurrentUser();
-        if (current_user != null){
-            String name = current_user.getDisplayName();
-            String email = current_user.getEmail();
-            Uri photoUrl = current_user.getPhotoUrl;
-
-           // The user's ID, unique to the Firebase project. Do NOT use this value to
-           // authenticate with your backend server, if you have one. Use
-           // FirebaseUser.getToken() instead.
-            String uid = current_user.getUid();
-        }
-
+    private void businessCreateDB(FirebaseUser user){
         // Database
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         Business_CLASS newBusiness = new Business_CLASS();
-
-        //root.push().getKey().
 
         newBusiness.owner = fullname.getText().toString().trim();
         newBusiness.emailaddress = email.getText().toString().trim();
@@ -138,11 +136,16 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
         newBusiness.password = password.getText().toString().trim();
 
         Map<String, Object> business_info = new HashMap<String, Object>();
-        business_info.put(email.getText().toString().trim(), newBusiness);
-        business_info.put(password.getText().toString().trim(), newBusiness);
+        business_info.put(user.getUid(), newBusiness);
 
-        root.child("All_Accounts").child("Business_Accounts").setValue(business_info);
+        root.child("All_Accounts").child("Business_Accounts").child("User_ID").updateChildren(business_info);
+        /*
+            Possible alternative if newBusiness.account_type is changed to "Business_Accounts"
+            >>  root.child("All_Accounts").child(newBusiness.account_type).updateChildren(business_info);
+            <<  linked-7b9db > All_Accounts > Business_Accounts > UserID > businessinfo
         */
+
+
         startActivity(new Intent(BusinessCreate.this, Start.class));
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -101,64 +102,74 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
             createUserAuth();
     }
 
-    private void createUserAuth(){
-        String user = email.getText().toString().trim();
-        String pass = password.getText().toString().trim();
-
-        mAuth.createUserWithEmailAndPassword(user, pass)
-                .addOnCompleteListener(UserCreate.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task){
-                        if (!task.isSuccessful()) {
-                            Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
-                            Toast.makeText(UserCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
-                        }
-
-                        else {
-                            Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            createUserDB();
-                        }
-
-                    }
-                });
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
-    private void createUserDB(){
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null)
+            mAuth.removeAuthStateListener(mAuthListener);
+    }
+
+    private void createUserAuth() {
+        String user = email.getText().toString().trim();
+        String pass = password.getText().toString().trim();
+        String pass1 = confirm.getText().toString().trim();
+        String User = username.getText().toString().trim();
+        String Full = fullname.getText().toString().trim();
+        String Month = month_spinner.getSelectedItem().toString();
+        String Year = year_spinner.getSelectedItem().toString();
+        String Gender = gender_spinner.getSelectedItem().toString();
+
+        //Error check for empty boxes
+        if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(pass1) || TextUtils.isEmpty(User) ||
+                TextUtils.isEmpty(Full) || TextUtils.isEmpty(Month) || TextUtils.isEmpty(Year) || TextUtils.isEmpty(Gender))
+            Toast.makeText(UserCreate.this, R.string.empty_field, Toast.LENGTH_SHORT).show();
+        else if (!pass.equals(pass1))
+            Toast.makeText(UserCreate.this, R.string.pw_mismatch, Toast.LENGTH_SHORT).show();
+
+        else {
+            mAuth.createUserWithEmailAndPassword(user, pass)
+                    .addOnCompleteListener(UserCreate.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
+                                Toast.makeText(UserCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                                createUserDB(task.getResult().getUser());
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void createUserDB(FirebaseUser user){
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         User_CLASS newUser = new User_CLASS();
 
-
-        /* An example to access current user's information
-        FirebaseUser current_user;
-        current_user = FirebaseAuth.getInstance().getCurrentUser();
-        if (current_user != null){
-            String name = current_user.getDisplayName();
-            String email = current_user.getEmail();
-            Uri photoUrl = current_user.getPhotoUrl;
-
-           // The user's ID, unique to the Firebase project. Do NOT use this value to
-           // authenticate with your backend server, if you have one. Use
-           // FirebaseUser.getToken() instead.
-            String uid = current_user.getUid();
-        }*/
-
-
-        // newUser.username = username.getText().toString().trim();
-        //newUser.fullname = fullname.getText().toString().trim();
+        newUser.username = username.getText().toString().trim();
+        newUser.fullname = fullname.getText().toString().trim();
         newUser.emailaddress = email.getText().toString().trim();
         newUser.password = password.getText().toString().trim();
-       // newUser.month = month_spinner.getSelectedItem().toString();
-        //newUser.year = year_spinner.getSelectedItem().toString();
-        //newUser.gender = gender_spinner.getSelectedItem().toString();
-
+        newUser.month = month_spinner.getSelectedItem().toString();
+        newUser.year = year_spinner.getSelectedItem().toString();
+        newUser.gender = gender_spinner.getSelectedItem().toString();
 
         Map<String, Object> user_info = new HashMap<String, Object>();
-        user_info.put(email.getText().toString().trim(), newUser);
+        user_info.put(user.getUid(), newUser);
 
-        //root.child("User_Accounts").setValue(user_info);
-        //root.child("All_Accounts").setValue(user_info);
-        root.child("mytest").setValue("success");
-
+        root.child("All_Accounts").child("User_Accounts").child("User_ID").updateChildren(user_info);
+        /*
+            Possible alternative if newUser.account_type is changed to "User_Accounts"
+            >>  root.child("All_Accounts").child(newUser.account_type).updateChildren(user_info);
+            <<  linked-7b9db > All_Accounts > User_Account > UserID > userinfo
+        */
         startActivity(new Intent(UserCreate.this, UserMenu.class));
     }
 
