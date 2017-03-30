@@ -11,6 +11,8 @@ public class Business_CLASS {
     public String business_address;
     public String password;
     public String account_type;
+    public String latitude;
+    public String longitude;
 
     public Business_CLASS(){
         account_type = "Business";

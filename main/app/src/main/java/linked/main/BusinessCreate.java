@@ -1,6 +1,8 @@
 package linked.main;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BusinessCreate extends AppCompatActivity implements View.OnClickListener{
@@ -89,11 +93,16 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
         }
         else if (v == submit_button) {
-            businessCreateAuth();
+           try {
+               businessCreateAuth();
+           }
+           catch(IOException e){
+               e.printStackTrace();
+           }
         }
     }
 
-    private void businessCreateAuth() {
+    private void businessCreateAuth() throws IOException{
         String owner = fullname.getText().toString().trim();
         String user = email.getText().toString().trim();
         String business_name = business.getText().toString().trim();
@@ -117,14 +126,18 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
                                 Toast.makeText(BusinessCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                                businessCreateDB(task.getResult().getUser());
+                                try {
+                                    businessCreateDB(task.getResult().getUser());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     });
         }
     }
 
-    private void businessCreateDB(FirebaseUser user){
+    private void businessCreateDB(FirebaseUser user)throws IOException{
         // Database
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         Business_CLASS newBusiness = new Business_CLASS();
@@ -132,8 +145,23 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
         newBusiness.owner = fullname.getText().toString().trim();
         newBusiness.emailaddress = email.getText().toString().trim();
         newBusiness.business_name = business.getText().toString().trim();
-        newBusiness.business_address = address.getText().toString().trim();
+        newBusiness.business_address = address.getText().toString();
         newBusiness.password = password.getText().toString().trim();
+
+        //converting addresses into Lat/Long
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addresses = geocoder.getFromLocationName(newBusiness.business_address,1);
+
+        if(addresses.size() > 0)
+        {
+            newBusiness.latitude = String.valueOf(addresses.get(0).getLatitude());
+            newBusiness.longitude =String.valueOf(addresses.get(0).getLongitude());
+        }
+        else{
+            Toast.makeText(this, "error, can't find address", Toast.LENGTH_LONG).show();
+            newBusiness.latitude = String.valueOf(0);
+            newBusiness.longitude = String.valueOf(0);
+        }
 
         Map<String, Object> business_info = new HashMap<String, Object>();
         business_info.put(user.getUid(), newBusiness);
