@@ -124,7 +124,8 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
                             if (!task.isSuccessful()) {
                                 Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
                                 Toast.makeText(BusinessCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
-                            } else {
+                            }
+                            else {
                                 Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
                                 try {
                                     businessCreateDB(task.getResult().getUser());
@@ -158,7 +159,7 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
             newBusiness.longitude =String.valueOf(addresses.get(0).getLongitude());
         }
         else{
-            Toast.makeText(this, "error, can't find address", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.invalid_address, Toast.LENGTH_LONG).show();
             newBusiness.latitude = String.valueOf(0);
             newBusiness.longitude = String.valueOf(0);
         }
@@ -173,8 +174,7 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
             <<  linked-7b9db > All_Accounts > Business_Accounts > UserID > businessinfo
         */
 
-
-        startActivity(new Intent(BusinessCreate.this, Start.class));
+        startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
     }
 
 }

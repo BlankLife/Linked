@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Start extends AppCompatActivity implements View.OnClickListener {
@@ -100,10 +102,15 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("EmailPassword", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                                //Retrieve "account_type" from database and choose which activity to go to.
                                 startActivity(new Intent(Start.this, UserMenu.class));
-                                //startActivity(new Intent(Start.this, BusinessMenu.class));
+                                /*
+                                    Check for account type through database
+                                    String account_type = getAccountType();
+                                    if (account_type == "business")
+                                        startActivity(new Intent(Start.this, BusinessMenu.class));
+                                    else if (account_type == "user")
+                                        startActivity(new Intent(Start.this, UserMenu.class));
+                                */
                             }
                         }
                     });

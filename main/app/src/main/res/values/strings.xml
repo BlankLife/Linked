@@ -15,7 +15,7 @@
     <string name="app_name">Linked</string>
     <string name="login">Log In</string>
     <string name="offer_activity">What activities are you offering?</string>
-    <string name="password">Password</string>
+    <string name="password">Password (min 6 chars)</string>
     <string name="signup">Sign Up</string>
     <string name="submit">Submit</string>
     <string name="upload_pic">Upload Picture</string>
@@ -25,6 +25,7 @@
     <string name="test_btn">Owner Menu</string>
     <string name="view_delete_act">View/Edit Activities</string>
     <string name="business_menu_title">My Business</string>
+    <string name="invalid_address">Invalid address</string>
 
 
     <string-array name="business_type_array">
