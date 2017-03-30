@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class CreateAccount extends AppCompatActivity implements View.OnClickListener {
 
-    Button user_account, business_account;
+    Button user_account, business_account, business_menu; //business_menu button is only for testing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,9 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
         business_account = (Button) findViewById(R.id.businessButton);
         business_account.setOnClickListener(this);
+
+        business_menu = (Button) findViewById(R.id.menuButton);
+        business_menu.setOnClickListener(this);
     }
 
     @Override
@@ -29,5 +32,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(CreateAccount.this, UserCreate.class));
         else if (v == business_account)
             startActivity(new Intent(CreateAccount.this, BusinessCreate.class));
+        else if (v == business_menu)                        //this else if statement is for testing only
+            startActivity(new Intent(CreateAccount.this, BusinessMain.class));
         }
 }
