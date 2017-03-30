@@ -20,7 +20,9 @@
         <activity android:name=".CreateAccount" />
         <activity android:name=".UserCreate" />
         <activity android:name=".BusinessCreate" />
-        <activity android:name=".UserMenu"></activity>
+        <activity android:name=".UserMenu"/>
+        <activity android:name=".BusinessMain">
+        </activity>
     </application>
 
 </manifest>

@@ -100,8 +100,12 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
                         }
 
                         else {
+                            /* Need to differentiate between Regular User and Business Owner.
+                               Logging in now temporarily only goes to the Business Menu.
+                               This requires interactions with Database.
+                             */
                             Log.d("EmailPassword", "signInWithEmail:onComplete:" + task.isSuccessful());
-                            startActivity(new Intent(Start.this, UserMenu.class));
+                            startActivity(new Intent(Start.this, BusinessMain.class));
                         }
                     }
                 });
