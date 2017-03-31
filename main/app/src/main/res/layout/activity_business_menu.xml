@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/viewEditActs"
         android:textAllCaps="false"
-        android:backgroundTint="@color/prim_blue"
+        android:backgroundTint="@android:color/white"
         android:textColor="@android:color/white"
         android:layout_marginBottom="54dp"
         android:layout_alignParentBottom="true"

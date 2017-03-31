@@ -108,4 +108,6 @@
         <item name="biking">Biking</item>
         <item name="dancing">Dancing</item>
     </string-array>
+    <string name="title_business_list">Businesses</string>
+    <string name="title_business_detail">Business Detail</string>
 </resources>
