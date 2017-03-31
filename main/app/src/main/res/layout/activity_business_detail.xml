@@ -64,7 +64,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:textColor="@android:color/white"
-            android:backgroundTint="@color/prim_blue" />
+            android:backgroundTint="@color/colorPrimary" />
 
     </RelativeLayout>
 

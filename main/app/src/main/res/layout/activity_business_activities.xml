@@ -46,7 +46,7 @@
         android:layout_alignRight="@+id/activitiesTitle"
         android:layout_alignEnd="@+id/activitiesTitle"
         android:textColor="@android:color/white"
-        android:backgroundTint="@color/prim_blue"/>
+        android:backgroundTint="@color/colorPrimary"/>
 
     <Button
         android:id="@+id/foodButton"
@@ -59,7 +59,7 @@
         android:layout_alignLeft="@+id/artButton"
         android:layout_alignStart="@+id/artButton"
         android:textColor="@android:color/white"
-        android:backgroundTint="@color/prim_blue"/>
+        android:backgroundTint="@color/colorPrimary"/>
 
     <Button
         android:id="@+id/sportsButton"
@@ -73,7 +73,7 @@
         android:layout_alignStart="@+id/foodButton"
         android:layout_marginBottom="17dp"
         android:textColor="@android:color/white"
-        android:backgroundTint="@color/prim_blue"/>
+        android:backgroundTint="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/select_act"
@@ -147,7 +147,7 @@
         android:layout_alignStart="@+id/select_act"
         android:layout_marginBottom="16dp"
         android:text="@string/submit"
-        android:backgroundTint="@color/prim_blue"
+        android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:textAllCaps="false"/>
 

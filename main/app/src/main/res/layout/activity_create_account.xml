@@ -30,7 +30,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textAllCaps="false"
-        android:backgroundTint="@color/prim_blue"
+        android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_width="200dp"
         android:textSize="18sp" />
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
         android:textAllCaps="false"
-        android:backgroundTint="@color/prim_blue"
+        android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:layout_below="@+id/userButton"
@@ -59,7 +59,7 @@
         android:layout_alignStart="@+id/businessButton"
         android:layout_marginTop="24dp"
         android:textAllCaps="false"
-        android:backgroundTint="@color/prim_blue"
+        android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 </RelativeLayout>
