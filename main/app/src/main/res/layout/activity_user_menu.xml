@@ -11,18 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="linked.main.UserMenu">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:fontFamily="sans-serif"
-        android:text="Menu"
-        android:textColor="@android:color/black"
-        android:textSize="25sp" />
-
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -63,12 +51,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center"
         android:layout_alignBaseline="@+id/signoutButton"
         android:layout_alignBottom="@+id/signoutButton"
-        android:layout_alignLeft="@+id/imageButton3"
-        android:layout_alignStart="@+id/imageButton3"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp" />
+        android:layout_alignLeft="@+id/imageButton1"
+        android:layout_alignStart="@+id/imageButton1"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp" />
 
     <TextView
         android:text="Sign Out"
@@ -76,9 +65,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_below="@+id/textView"
+        android:layout_gravity="center"
+        android:layout_alignBottom="@+id/imageButton2"
         android:layout_alignLeft="@+id/imageButton2"
         android:layout_alignStart="@+id/imageButton2"
-        android:layout_marginTop="85dp" />
+        android:layout_marginLeft="22dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginBottom="118dp" />
 
 </RelativeLayout>

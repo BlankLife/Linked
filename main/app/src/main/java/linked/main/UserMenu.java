@@ -36,6 +36,8 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
 
         link_button = (ImageButton)findViewById(R.id.imageButton1);
         link_button.setOnClickListener(this);
+
+        setTitle("Menu");
     }
 
     @Override

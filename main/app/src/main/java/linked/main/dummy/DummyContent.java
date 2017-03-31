@@ -43,7 +43,7 @@ public class DummyContent {
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Details about Business: ").append(position);
+        builder.append("Details about Business ").append(position);
         builder.append("\nMore details information here.");
         return builder.toString();
     }

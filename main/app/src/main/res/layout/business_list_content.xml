@@ -22,7 +22,6 @@
         android:layout_height="50dp"
         android:layout_weight="1"
         app:srcCompat="@drawable/restaurant" />
-    -->
 
     <TextView
         android:id="@+id/id"
@@ -30,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
+    -->
 
     <TextView
         android:id="@+id/content"
