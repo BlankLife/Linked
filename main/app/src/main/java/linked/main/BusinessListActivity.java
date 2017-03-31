@@ -44,7 +44,6 @@ public class BusinessListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +52,6 @@ public class BusinessListActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        */
 
         View recyclerView = findViewById(R.id.business_list);
         assert recyclerView != null;
