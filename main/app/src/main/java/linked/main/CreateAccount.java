@@ -35,6 +35,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         else if (v == business_account)
             startActivity(new Intent(CreateAccount.this, BusinessCreate.class));
         else if (v == business_menu)                        //this else if statement is for testing only
-            startActivity(new Intent(CreateAccount.this, BusinessActivities.class));
+            startActivity(new Intent(CreateAccount.this, UserMenu.class));
         }
 }
