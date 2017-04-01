@@ -30,7 +30,7 @@ public class CardFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeList();
-        getActivity().setTitle("7 Wonders of the Modern World");
+        getActivity().setTitle("Nearby Locations");
     }
 
     @Override
