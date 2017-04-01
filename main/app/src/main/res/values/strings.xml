@@ -31,6 +31,8 @@
     <string name="test_btn">Owner Menu</string>
     <string name="view_delete_act">View/Edit Activities</string>
 
+    <string name="title_business_list">Nearby People</string>
+    <string name="title_business_detail">Person Detail</string>
 
     <string-array name="business_type_array">
         <item name="business_title">Business Type</item>
@@ -112,6 +114,4 @@
         <item name="biking">Biking</item>
         <item name="dancing">Dancing</item>
     </string-array>
-    <string name="title_business_list">Businesses</string>
-    <string name="title_business_detail">Business Detail</string>
 </resources>
