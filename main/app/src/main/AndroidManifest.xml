@@ -28,14 +28,16 @@
         <activity
             android:name=".CreateAccount"
             android:label="Create Account" />
-        <activity android:name=".UserCreate" />
-        <activity android:name=".BusinessCreate" />
+        <activity android:name=".UserCreate"
+            android:label="Creating User Account"/>
+        <activity android:name=".BusinessCreate"
+            android:label="Creating Business Account"/>
         <activity
             android:name=".UserMenu"
             android:label="Menu" />
         <activity
             android:name=".BusinessMenu"
-            android:label="Menu" />
+            android:label="My Business" />
         <activity
             android:name=".PersonListActivity"
             android:label="@string/title_business_list"
