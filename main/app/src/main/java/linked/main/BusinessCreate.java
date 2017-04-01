@@ -157,24 +157,32 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
         {
             newBusiness.latitude = String.valueOf(addresses.get(0).getLatitude());
             newBusiness.longitude =String.valueOf(addresses.get(0).getLongitude());
+
+            Map<String, Object> business_info = new HashMap<String, Object>();
+            business_info.put(user.getUid(), newBusiness);
+
+            root.child("All_Accounts").child("Business_Accounts").child("User_ID").updateChildren(business_info);
+
+            startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
         }
         else{
             Toast.makeText(this, R.string.invalid_address, Toast.LENGTH_LONG).show();
-            newBusiness.latitude = String.valueOf(0);
-            newBusiness.longitude = String.valueOf(0);
+           /* newBusiness.latitude = String.valueOf(0);
+            newBusiness.longitude = String.valueOf(0);*/
+
         }
 
-        Map<String, Object> business_info = new HashMap<String, Object>();
+/*        Map<String, Object> business_info = new HashMap<String, Object>();
         business_info.put(user.getUid(), newBusiness);
 
-        root.child("All_Accounts").child("Business_Accounts").child("User_ID").updateChildren(business_info);
+        root.child("All_Accounts").child("Business_Accounts").child("User_ID").updateChildren(business_info);*/
         /*
             Possible alternative if newBusiness.account_type is changed to "Business_Accounts"
             >>  root.child("All_Accounts").child(newBusiness.account_type).updateChildren(business_info);
             <<  linked-7b9db > All_Accounts > Business_Accounts > UserID > businessinfo
         */
 
-        startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
+//        startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
     }
 
 }

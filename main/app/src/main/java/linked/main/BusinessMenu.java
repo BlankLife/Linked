@@ -96,6 +96,9 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    // For the dialogs, we need to change the CheckBoxes to buttons because right now
+    // it works backwards (when we uncheck box, it deletes it)
+
     //Popup Window for Editing Business Name and Address
     protected void showEditBusinessDialog() {
         AlertDialog.Builder editBusiness = new AlertDialog.Builder(this);
