@@ -102,7 +102,7 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.d("EmailPassword", "signInWithEmail:onComplete:" + task.isSuccessful());
-                                startActivity(new Intent(Start.this, UserMenu.class));
+                                startActivity(new Intent(Start.this, BusinessMenu.class));
                                 /*
                                     Check for account type through database
                                     String account_type = getAccountType();

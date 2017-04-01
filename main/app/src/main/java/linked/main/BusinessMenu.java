@@ -2,6 +2,7 @@ package linked.main;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -38,12 +41,10 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
      }
      */
 
-    // We will also need a signout button from this menu for authentication to not mess up.
-
     protected Button selectActivitiesBtn;
     protected Button editBusinessBtn;
     protected TextView businessName;
-    protected TextView businessAddress;
+    protected TextView businessAddress, signout;
     protected String[] activity = {                            //******Retrieved Activities from DataBase in String Array GOES HERE
             "Activity1", "Activity2", "Activity3"};
     protected ArrayList<String> selectedActivities = new ArrayList<>();
@@ -68,6 +69,9 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         selectActivitiesBtn = (Button) findViewById(R.id.viewEditActs);
         selectActivitiesBtn.setOnClickListener(this);
 
+        signout = (TextView) findViewById(R.id.signoutButton);
+        signout.setOnClickListener(this);
+
         for (int i = 0; i < activity.length; i++) {
             selectedActivities.add(activity[i]);
         }
@@ -81,8 +85,14 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.editBusiness:
                 showEditBusinessDialog();
+                break;
+            case R.id.signoutButton:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(BusinessMenu.this, Start.class));
+                break;
             default:
                 break;
+
         }
     }
 
