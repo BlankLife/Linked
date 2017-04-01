@@ -25,14 +25,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAccount"
-            android:label="Create Account"/>
+        <activity
+            android:name=".CreateAccount"
+            android:label="Create Account" />
         <activity android:name=".UserCreate" />
         <activity android:name=".BusinessCreate" />
-        <activity android:name=".UserMenu"
-            android:label="Menu"/>
-        <activity android:name=".BusinessMenu"
-            android:label="Menu"/>
+        <activity
+            android:name=".UserMenu"
+            android:label="Menu" />
+        <activity
+            android:name=".BusinessMenu"
+            android:label="Menu" />
         <activity
             android:name=".PersonListActivity"
             android:label="@string/title_business_list"
@@ -46,7 +49,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="linked.main.PersonListActivity" />
         </activity>
-        <activity android:name=".BusinessActivities"></activity>
+        <activity android:name=".BusinessActivities" />
+        <activity android:name=".CardFragment" />
+        <activity android:name=".LocationActivity"></activity>
     </application>
 
 </manifest>
