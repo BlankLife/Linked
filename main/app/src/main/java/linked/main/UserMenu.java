@@ -50,8 +50,6 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
         chat.setOnClickListener(this);
         settings = (ImageView) findViewById(R.id.settingsImageView);
         settings.setOnClickListener(this);
-
-        setTitle("Menu");
     }
 
     @Override

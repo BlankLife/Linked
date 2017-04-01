@@ -31,6 +31,7 @@ public class BusinessDetailActivity extends AppCompatActivity implements View.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +40,7 @@ public class BusinessDetailActivity extends AppCompatActivity implements View.On
                         .setAction("Action", null).show();
             }
         });
+        */
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();

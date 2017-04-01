@@ -27,8 +27,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
         user_menu = (Button) findViewById(R.id.menuButton1);
         user_menu.setOnClickListener(this);
-
-        setTitle("Account Creation");
     }
 
     @Override

@@ -71,7 +71,6 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < activity.length; i++) {
             selectedActivities.add(activity[i]);
         }
-        setTitle("Menu");
     }
 
 
