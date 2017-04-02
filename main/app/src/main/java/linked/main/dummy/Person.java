@@ -11,7 +11,7 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class DummyContent {
+public class Person {
 
     /**
      * An array of sample (dummy) items.
@@ -38,12 +38,12 @@ public class DummyContent {
     }
 
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Business " + position, makeDetails(position));
+        return new DummyItem(String.valueOf(position), "Person " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Details about Business ").append(position);
+        builder.append("Details about Person ").append(position);
         builder.append("\nMore details information here.");
         return builder.toString();
     }

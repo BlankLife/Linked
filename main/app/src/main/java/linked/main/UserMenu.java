@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -60,7 +59,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
         }
         //...
         if (v == find_act)
-            startActivity(new Intent(this, BusinessListActivity.class));
+            startActivity(new Intent(this, LocationActivity.class));
         else if (v == view_act)
             startActivity(new Intent(this, BusinessActivities.class));
     }

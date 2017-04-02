@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import linked.main.dummy.DummyContent;
+import linked.main.dummy.Person;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import java.util.List;
  * An activity representing a list of Businesses. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link BusinessDetailActivity} representing
+ * lead to a {@link PersonDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class BusinessListActivity extends AppCompatActivity {
+public class PersonListActivity extends AppCompatActivity {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -38,7 +38,7 @@ public class BusinessListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_list);
+        setContentView(R.layout.activity_person_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,22 +67,22 @@ public class BusinessListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(Person.ITEMS));
     }
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<DummyContent.DummyItem> mValues;
+        private final List<Person.DummyItem> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
+        public SimpleItemRecyclerViewAdapter(List<Person.DummyItem> items) {
             mValues = items;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.business_list_content, parent, false);
+                    .inflate(R.layout.person_list_content, parent, false);
             return new ViewHolder(view);
         }
 
@@ -97,16 +97,16 @@ public class BusinessListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(BusinessDetailFragment.ARG_ITEM_ID, holder.mItem.id);
-                        BusinessDetailFragment fragment = new BusinessDetailFragment();
+                        arguments.putString(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        PersonDetailFragment fragment = new PersonDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.business_detail_container, fragment)
                                 .commit();
                     } else {
                         Context context = v.getContext();
-                        Intent intent = new Intent(context, BusinessDetailActivity.class);
-                        intent.putExtra(BusinessDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        Intent intent = new Intent(context, PersonDetailActivity.class);
+                        intent.putExtra(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.id);
 
                         context.startActivity(intent);
                     }
@@ -123,7 +123,7 @@ public class BusinessListActivity extends AppCompatActivity {
             public final View mView;
             //public final TextView mIdView;
             public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
+            public Person.DummyItem mItem;
 
             public ViewHolder(View view) {
                 super(view);

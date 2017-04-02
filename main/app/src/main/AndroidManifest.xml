@@ -25,28 +25,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAccount"
-            android:label="Create Account"/>
-        <activity android:name=".UserCreate" />
-        <activity android:name=".BusinessCreate" />
-        <activity android:name=".UserMenu"
-            android:label="Menu"/>
-        <activity android:name=".BusinessMenu"
-            android:label="Menu"/>
         <activity
-            android:name=".BusinessListActivity"
+            android:name=".CreateAccount"
+            android:label="Create Account" />
+        <activity android:name=".UserCreate"
+            android:label="Creating User Account"/>
+        <activity android:name=".BusinessCreate"
+            android:label="Creating Business Account"/>
+        <activity
+            android:name=".UserMenu"
+            android:label="Menu" />
+        <activity
+            android:name=".BusinessMenu"
+            android:label="My Business" />
+        <activity
+            android:name=".PersonListActivity"
             android:label="@string/title_business_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BusinessDetailActivity"
+            android:name=".PersonDetailActivity"
             android:label="@string/title_business_detail"
-            android:parentActivityName=".BusinessListActivity"
+            android:parentActivityName=".PersonListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="linked.main.BusinessListActivity" />
+                android:value="linked.main.PersonListActivity" />
         </activity>
-        <activity android:name=".BusinessActivities"></activity>
+        <activity android:name=".BusinessActivities" />
+        <activity android:name=".CardFragment" />
+        <activity android:name=".LocationActivity"></activity>
     </application>
 
 </manifest>
