@@ -217,14 +217,6 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-    //Shows Updated Activities on the View/Edit Activity Button: This is a temporary function
-    protected void onChangeSelectedActivities() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(String activity : selectedActivities)
-            stringBuilder.append(activity + ",");
-        selectActivitiesBtn.setText(stringBuilder.toString());
-    }
 
     //Popup Window for View/Edit Activities
     protected void showSelectActivitiesDialog() {
@@ -233,18 +225,17 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         int count = activity.length;
 
         for(int i = 0; i < count; i++)
-            checkedActivities[i] = selectedActivities.contains(activity[i]);
+            checkedActivities[i] = !selectedActivities.contains(activity[i]);
 
         DialogInterface.OnMultiChoiceClickListener activityDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
-                if (isChecked)
+                if (!isChecked)
                     selectedActivities.add(activity[which]);
                 else
                     selectedActivities.remove(activity[which]);
 
-                onChangeSelectedActivities();                               //Temp
             }
         };
 
@@ -276,7 +267,6 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                                 pathTObusiness.child("activity_List").setValue(db_activity_list);
 
                         }
-                        onChangeSelectedActivities();                       //Temp
                     }
                 })
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
