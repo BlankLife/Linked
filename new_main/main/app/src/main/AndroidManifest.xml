@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="linked.main">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDeoQeUS0XqOVvEdEELBGlvtaCoDwbK1w8" />
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/cooldog_icon_new"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Start">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CreateAccount"
+            android:label="Create Account"/>
+        <activity android:name=".UserCreate" />
+        <activity android:name=".BusinessCreate" />
+        <activity android:name=".UserMenu"
+            android:label="Menu"/>
+        <activity android:name=".BusinessMenu"
+            android:label="Menu"/>
+        <activity
+            android:name=".BusinessListActivity"
+            android:label="@string/title_business_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BusinessDetailActivity"
+            android:label="@string/title_business_detail"
+            android:parentActivityName=".BusinessListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="linked.main.BusinessListActivity" />
+        </activity>
+        <activity android:name=".BusinessActivities"></activity>
+    </application>
+
+</manifest>
