@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,9 +24,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 
 /**
@@ -126,8 +129,14 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                 showSelectActivitiesDialog();
                 break;
             case R.id.editBusiness:
-                showEditBusinessDialog();
-                break;
+               try {
+                   showEditBusinessDialog();
+                   break;
+               }
+               catch(IOException e){
+                   e.printStackTrace();
+               }
+
             case R.id.signoutButton:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(BusinessMenu.this, Start.class));
@@ -142,7 +151,7 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
     // it works backwards (when we uncheck box, it deletes it)
 
     //Popup Window for Editing Business Name and Address
-    protected void showEditBusinessDialog() {
+    protected void showEditBusinessDialog() throws IOException {
         AlertDialog.Builder editBusiness = new AlertDialog.Builder(this);
 
 
@@ -179,10 +188,26 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                             DatabaseReference root = FirebaseDatabase.getInstance().getReference();
                             root.child("Business_Accounts").child("User_ID").child(static_variable_CLASS.User_ID).child("business_address").setValue(addressText);
 
-                            /* Jianwei, please add your code here to retrieve the latitude and the longitude of the new address that the business wants to change to.
-                             * The new address is stored in the string variable: 'addressText'
-                             * (I tried doing it based off the code you had in the previous page, but I was unsuccessful )
-                             */
+                            //update lat/long
+                            Geocoder geocoder = new Geocoder(BusinessMenu.this);
+                            try {
+                                List<Address> addresses = geocoder.getFromLocationName(addressText,1);
+                                if(addresses.size() > 0)
+                                {
+                                    String latitude = String.valueOf(addresses.get(0).getLatitude());
+                                    String longitude =String.valueOf(addresses.get(0).getLongitude());
+                                    root.child("Business_Accounts").child("User_ID").child(static_variable_CLASS.User_ID).child("latitude").setValue(latitude);
+                                    root.child("Business_Accounts").child("User_ID").child(static_variable_CLASS.User_ID).child("longitude").setValue(longitude);
+                                }
+                                else{
+                                    Toast.makeText(BusinessMenu.this, R.string.invalid_address, Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
                             businessAddress.setText(addressText);
                         }
                         dialog.dismiss();
