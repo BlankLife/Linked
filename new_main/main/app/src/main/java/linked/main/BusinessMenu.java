@@ -129,13 +129,13 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                 showSelectActivitiesDialog();
                 break;
             case R.id.editBusiness:
-               try {
-                   showEditBusinessDialog();
-                   break;
-               }
-               catch(IOException e){
-                   e.printStackTrace();
-               }
+                try {
+                    showEditBusinessDialog();
+                    break;
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
 
             case R.id.signoutButton:
                 FirebaseAuth.getInstance().signOut();
@@ -233,9 +233,9 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
 
                 if (!isChecked)
                     selectedActivities.add(activity[which]);
-                else
+                else {
                     selectedActivities.remove(activity[which]);
-
+                }
             }
         };
 
@@ -253,6 +253,10 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                     public void onClick(DialogInterface dialog, int id) {
                         String tAct = input.getText().toString().trim();
                         if(!tAct.isEmpty()) {
+                            selectedActivities = new ArrayList<>();
+                            for (int i = 0; i < activity.length; i++) {
+                                selectedActivities.add(activity[i]);
+                            }
                             selectedActivities.add(tAct);
                             activity = new String[selectedActivities.size()];
                             activity = selectedActivities.toArray(activity);
@@ -269,7 +273,7 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         activity = new String[selectedActivities.size()];
@@ -282,6 +286,16 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                             pathTObusiness.child("activity_List").setValue("No activities");
                         else
                             pathTObusiness.child("activity_List").setValue(db_activity_list);
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        selectedActivities = new ArrayList<>();
+                        for (int i = 0; i < activity.length; i++) {
+                            selectedActivities.add(activity[i]);
+                        }
                         dialog.dismiss();
                     }
                 });
