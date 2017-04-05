@@ -22,11 +22,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
         business_account = (Button) findViewById(R.id.businessButton);
         business_account.setOnClickListener(this);
-
-        user_menu = (Button) findViewById(R.id.menuButton1);
-        user_menu.setOnClickListener(this);
-        user_menu.setBackgroundColor(Color.TRANSPARENT);
-        user_menu.setTextColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -35,7 +30,5 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(CreateAccount.this, UserCreate.class));
         else if (v == business_account)
             startActivity(new Intent(CreateAccount.this, BusinessCreate.class));
-        else if (v == user_menu)
-            startActivity(new Intent(this, UserMenu.class));
         }
 }
