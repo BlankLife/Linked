@@ -23,8 +23,8 @@ public class CardFragment extends Fragment {
 
     ArrayList<WonderModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
-    String Wonders[] = {"Chichen Itza","Christ the Redeemer","Great Wall of China","Machu Picchu","Petra","Taj Mahal","Colosseum"};
-    int  Images[] = {R.drawable.chichen_itza,R.drawable.christ_the_redeemer,R.drawable.great_wall_of_china,R.drawable.machu_picchu,R.drawable.petra,R.drawable.taj_mahal,R.drawable.colosseum};
+    String Wonders[] = {"Gym","Restaurant","Park","Arcade","Bookstore","Library","Movie Theater"};
+    int  Images[] = {R.drawable.gym,R.drawable.restaurant,R.drawable.park,R.drawable.arcade,R.drawable.bookstore,R.drawable.library,R.drawable.movie_theater};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,13 +113,13 @@ public class CardFragment extends Fragment {
                         likeImageView.setTag(R.drawable.ic_liked);
                         likeImageView.setImageResource(R.drawable.ic_liked);
 
-                        Toast.makeText(getActivity(),titleTextView.getText()+" added to favourites",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),titleTextView.getText()+" added to favorites.",Toast.LENGTH_SHORT).show();
 
                     }else{
 
                         likeImageView.setTag(R.drawable.ic_like);
                         likeImageView.setImageResource(R.drawable.ic_like);
-                        Toast.makeText(getActivity(),titleTextView.getText()+" removed from favourites",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),titleTextView.getText()+" removed from favorites.",Toast.LENGTH_SHORT).show();
 
 
                     }
