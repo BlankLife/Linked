@@ -3,7 +3,7 @@ package linked.main;
 /**
  * Created by rhapsdoyjoy on 3/31/17.
  */
-public class WonderModel {
+public class LocationModel {
 
     String cardName;
     int imageResourceId;

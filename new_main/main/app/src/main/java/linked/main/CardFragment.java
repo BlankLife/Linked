@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class CardFragment extends Fragment {
 
-    ArrayList<WonderModel> listitems = new ArrayList<>();
+    ArrayList<LocationModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     String Wonders[] = {"Gym", "Restaurant", "Park", "Arcade", "Bookstore", "Library", "Movie Theater"};
     int Images[] = {R.drawable.gym, R.drawable.restaurant, R.drawable.park, R.drawable.arcade, R.drawable.bookstore, R.drawable.library, R.drawable.movie_theater};
@@ -54,9 +54,9 @@ public class CardFragment extends Fragment {
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-        private ArrayList<WonderModel> list;
+        private ArrayList<LocationModel> list;
 
-        public MyAdapter(ArrayList<WonderModel> Data) {
+        public MyAdapter(ArrayList<LocationModel> Data) {
             list = Data;
         }
 
@@ -151,7 +151,7 @@ public class CardFragment extends Fragment {
         for (int i = 0; i < 7; i++) {
 
 
-            WonderModel item = new WonderModel();
+            LocationModel item = new LocationModel();
             item.setCardName(Wonders[i]);
             item.setImageResourceId(Images[i]);
             item.setIsfav(0);
