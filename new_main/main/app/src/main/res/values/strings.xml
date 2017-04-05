@@ -1,28 +1,28 @@
 <resources>
     <string name="account_type">Choose an account type.</string>
     <string name="app_name">Linked</string>
-    <string name="auth_failed">Incorrect email or password</string>
+    <string name="auth_failed">Incorrect email or password.</string>
     <string name="business_menu_title">My Business</string>
     <string name="business">Business</string>
     <string name="business_create">Business Account Creation</string>
     <string name="business_address">Business Address</string>
     <string name="business_name">Business Name</string>
-    <string name="create_user_failed">Email already in use</string>
+    <string name="create_user_failed">Email already in use.</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="email">Email Address</string>
-    <string name="empty_field">Missing required information</string>
+    <string name="empty_field">Missing required information.</string>
     <string name="full">Full Name</string>
-    <string name="invalid_address">Invalid address</string>
+    <string name="invalid_address">Invalid address.</string>
     <string name="offer_activity">What activities are you offering?</string>
     <string name="password">Password (min 6 chars)</string>
     <string name="password_confirm">Confirm Password</string>
-    <string name="pw_mismatch">Password mismatch</string>
+    <string name="pw_mismatch">Password mismatch.</string>
     <string name="select_category">Select a Category</string>
     <string name="select_activity">Select an Activity</string>
     <string name="signin">Sign In</string>
     <string name="signup">Sign Up</string>
     <string name="signout">Sign Out</string>
-    <string name="skip">Skip this step</string>
+    <string name="skip">Skip This Step</string>
     <string name="submit">Submit</string>
     <string name="upload_pic">Upload Picture</string>
     <string name="user">User</string>
@@ -30,7 +30,7 @@
     <string name="username">Username</string>
     <string name="test_btn">Owner Menu</string>
     <string name="view_delete_act">View/Edit Activities</string>
-
+    <string name="send_to">Share</string>
 
     <string-array name="business_type_array">
         <item name="business_title">Business Type</item>

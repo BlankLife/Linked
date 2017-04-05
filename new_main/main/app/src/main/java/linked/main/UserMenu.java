@@ -60,7 +60,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener{
         }
         //...
         if (v == find_act)
-            startActivity(new Intent(this, BusinessListActivity.class));
+            startActivity(new Intent(this, LocationActivity.class));
         else if (v == view_act)
             startActivity(new Intent(this, BusinessActivities.class));
     }
