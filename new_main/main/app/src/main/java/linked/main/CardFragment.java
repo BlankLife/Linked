@@ -138,7 +138,7 @@ public class CardFragment extends Fragment {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getContext(), Start.class));
+                    startActivity(new Intent(getContext(), PersonListActivity.class));
                 }
             });
 

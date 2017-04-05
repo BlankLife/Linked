@@ -38,7 +38,20 @@
             android:label="Menu" />
         <activity android:name=".BusinessActivities" />
         <activity android:name=".CardFragment" />
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".LocationActivity" />
+        <activity
+            android:name=".PersonListActivity"
+            android:label="@string/title_person_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".PersonDetailActivity"
+            android:label="@string/title_person_detail"
+            android:parentActivityName=".PersonListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="linked.main.PersonListActivity" />
+        </activity>
     </application>
 
 </manifest>

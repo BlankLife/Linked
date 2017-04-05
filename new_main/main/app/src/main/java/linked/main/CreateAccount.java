@@ -1,6 +1,7 @@
 package linked.main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,9 +25,13 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
 
         business_menu = (Button) findViewById(R.id.menuButton);
         business_menu.setOnClickListener(this);
+        business_menu.setBackgroundColor(Color.TRANSPARENT);
+        business_menu.setTextColor(Color.TRANSPARENT);
 
         user_menu = (Button) findViewById(R.id.menuButton1);
         user_menu.setOnClickListener(this);
+        user_menu.setBackgroundColor(Color.TRANSPARENT);
+        user_menu.setTextColor(Color.TRANSPARENT);
     }
 
     @Override

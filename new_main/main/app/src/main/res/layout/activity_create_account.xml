@@ -50,30 +50,30 @@
         android:layout_alignStart="@+id/userButton" />
 
     <Button
-        android:text="User Menu"
         android:id="@+id/menuButton1"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/businessButton"
         android:layout_alignLeft="@+id/businessButton"
         android:layout_alignStart="@+id/businessButton"
+        android:layout_below="@+id/businessButton"
         android:layout_marginTop="24dp"
-        android:textAllCaps="false"
         android:backgroundTint="@color/colorPrimary"
+        android:text="User Menu"
+        android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <Button
-        android:text="Business Menu"
         android:id="@+id/menuButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_below="@+id/menuButton1"
         android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/menuButton1"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Business Menu"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </RelativeLayout>
