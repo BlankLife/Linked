@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +33,8 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
     //Layout Declarations
     EditText username, password;
     Button register_button, login_button;
+    ImageView logo_button;
+    MediaPlayer mp;
 
     //Firebase Declarations
     private FirebaseAuth mAuth;
@@ -61,10 +65,13 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
         password = (EditText) findViewById(R.id.passwordField);
         register_button = (Button) findViewById(R.id.signupButton);
         login_button = (Button) findViewById(R.id.signinButton);
+        logo_button = (ImageView) findViewById(R.id.Logo);
+        mp = MediaPlayer.create(this, R.raw.bark);
 
         // When a click event happens, onClick method is called (implements the interface)
         register_button.setOnClickListener(this);
         login_button.setOnClickListener(this);
+        logo_button.setOnClickListener(this);
     }
 
     @Override
@@ -87,6 +94,8 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
             startActivity(new Intent(Start.this, CreateAccount.class));
         else if (v == login_button)
                 userLogin(v);
+        else if(v == logo_button)
+            mp.start();
     }
 
     private void userLogin(View view) {
