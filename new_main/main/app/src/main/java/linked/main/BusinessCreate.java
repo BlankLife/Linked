@@ -38,6 +38,8 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener  mAuthListener;
 
+    private String longitude, latitude;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_create);
@@ -93,16 +95,40 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
         }
         else if (v == submit_button) {
-           try {
-               businessCreateAuth();
-           }
-           catch(IOException e){
-               e.printStackTrace();
-           }
+            if (!boxEmpty() && !invalidAddress(address.getText().toString().trim())){
+                try {
+                    businessCreateAuth();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    private void businessCreateAuth() throws IOException{
+    public boolean invalidAddress(String address){
+        //converting addresses into Lat/Long
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocationName(address , 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(addresses.size() > 0) {
+            latitude = String.valueOf(addresses.get(0).getLatitude());
+            longitude = String.valueOf(addresses.get(0).getLongitude());
+            return false;
+        }
+        else{
+            Toast.makeText(this, R.string.invalid_address, Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+    }
+
+    public boolean boxEmpty(){
         String owner = fullname.getText().toString().trim();
         String user = email.getText().toString().trim();
         String business_name = business.getText().toString().trim();
@@ -112,30 +138,36 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
 
         //Error Check for empty boxes
         if (TextUtils.isEmpty(owner) || TextUtils.isEmpty(user) || TextUtils.isEmpty(business_name) ||
-                TextUtils.isEmpty(business_address) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(pass1))
+                TextUtils.isEmpty(business_address) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(pass1)) {
             Toast.makeText(BusinessCreate.this, R.string.empty_field, Toast.LENGTH_SHORT).show();
-        else if (!pass.equals(pass1))
+            return true;
+        }
+        else if (!pass.equals(pass1)) {
             Toast.makeText(BusinessCreate.this, R.string.pw_mismatch, Toast.LENGTH_SHORT).show();
-        else {
-            mAuth.createUserWithEmailAndPassword(user, pass)
-                    .addOnCompleteListener(BusinessCreate.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
-                                Toast.makeText(BusinessCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                                try {
-                                    businessCreateDB(task.getResult().getUser());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+            return true;
+        }
+        return false;
+    }
+
+    private void businessCreateAuth() throws IOException{
+        mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
+                .addOnCompleteListener(BusinessCreate.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
+                            Toast.makeText(BusinessCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            try {
+                                businessCreateDB(task.getResult().getUser());
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
-                    });
-        }
+                    }
+                });
     }
 
     private void businessCreateDB(FirebaseUser user)throws IOException{
@@ -145,8 +177,6 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
 
         All_GENERIC newAccount = new All_GENERIC();
         newAccount.account_type = "Business";
-
-
         newBusiness.owner = fullname.getText().toString().trim();
 
         newBusiness.emailaddress = email.getText().toString().trim();
@@ -160,52 +190,26 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
 
         newBusiness.password = password.getText().toString().trim();
 
+        newBusiness.longitude = longitude;
+        newBusiness.latitude = latitude;
+
         //Test activity list
 
-
-        //converting addresses into Lat/Long
-        Geocoder geocoder = new Geocoder(this);
-        List<Address> addresses = geocoder.getFromLocationName(newBusiness.business_address,1);
-
-        if(addresses.size() > 0)
-        {
-            newBusiness.latitude = String.valueOf(addresses.get(0).getLatitude());
-            newBusiness.longitude =String.valueOf(addresses.get(0).getLongitude());
-
-            Map<String, Object> business_info = new HashMap<String, Object>();
-            business_info.put(user.getUid(), newBusiness);
-
-            Map<String, Object> account_info = new HashMap<String, Object>();
-            account_info.put(user.getUid(), newAccount);
-
-            //storing the User_ID in a static variable so it can be accessed from any page
-            static_variable_CLASS.User_ID = user.getUid();
-
-            root.child("Business_Accounts").child("User_ID").updateChildren(business_info);
-            root.child("Business_Accounts").child("User_ID").child(user.getUid()).child("activity_List").setValue("No activities");
-
-            root.child("All_Accounts_Basic_Info").child("User_ID").updateChildren(account_info);
-
-            startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
-        }
-        else{
-            Toast.makeText(this, R.string.invalid_address, Toast.LENGTH_LONG).show();
-           /* newBusiness.latitude = String.valueOf(0);
-            newBusiness.longitude = String.valueOf(0);*/
-
-        }
-
-/*        Map<String, Object> business_info = new HashMap<String, Object>();
+        Map<String, Object> business_info = new HashMap<String, Object>();
         business_info.put(user.getUid(), newBusiness);
 
-        root.child("All_Accounts").child("Business_Accounts").child("User_ID").updateChildren(business_info);*/
-        /*
-            Possible alternative if newBusiness.account_type is changed to "Business_Accounts"
-            >>  root.child("All_Accounts").child(newBusiness.account_type).updateChildren(business_info);
-            <<  linked-7b9db > All_Accounts > Business_Accounts > UserID > businessinfo
-        */
+        Map<String, Object> account_info = new HashMap<String, Object>();
+        account_info.put(user.getUid(), newAccount);
 
-//        startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
+        //storing the User_ID in a static variable so it can be accessed from any page
+        static_variable_CLASS.User_ID = user.getUid();
+
+        root.child("Business_Accounts").child("User_ID").updateChildren(business_info);
+        root.child("Business_Accounts").child("User_ID").child(user.getUid()).child("activity_List").setValue("No activities");
+
+        root.child("All_Accounts_Basic_Info").child("User_ID").updateChildren(account_info);
+
+        startActivity(new Intent(BusinessCreate.this, BusinessMenu.class));
     }
 
 }

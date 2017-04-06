@@ -98,8 +98,10 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
         }
-        else if (v == submit_button)
-            createUserAuth();
+        else if (v == submit_button) {
+            if (!boxEmpty())
+                createUserAuth();
+        }
     }
 
     @Override
@@ -115,7 +117,7 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
             mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    private void createUserAuth() {
+    public boolean boxEmpty(){
         String user = email.getText().toString().trim();
         String pass = password.getText().toString().trim();
         String pass1 = confirm.getText().toString().trim();
@@ -127,27 +129,34 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
 
         //Error check for empty boxes
         if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(pass1) || TextUtils.isEmpty(User) ||
-                TextUtils.isEmpty(Full) || TextUtils.isEmpty(Month) || TextUtils.isEmpty(Year) || TextUtils.isEmpty(Gender))
+                TextUtils.isEmpty(Full) || TextUtils.isEmpty(Month) || TextUtils.isEmpty(Year) || TextUtils.isEmpty(Gender)) {
             Toast.makeText(UserCreate.this, R.string.empty_field, Toast.LENGTH_SHORT).show();
-        else if (!pass.equals(pass1))
-            Toast.makeText(UserCreate.this, R.string.pw_mismatch, Toast.LENGTH_SHORT).show();
-
-        else {
-            mAuth.createUserWithEmailAndPassword(user, pass)
-                    .addOnCompleteListener(UserCreate.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
-                                Toast.makeText(UserCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
-                                createUserDB(task.getResult().getUser());
-                            }
-                        }
-                    });
+            return true;
         }
+        else if (!pass.equals(pass1)) {
+            Toast.makeText(UserCreate.this, R.string.pw_mismatch, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
+
+    private void createUserAuth() {
+        mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), password.getText().toString().trim())
+                .addOnCompleteListener(UserCreate.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("EmailPassword", "createUserWithEmail:failed:" + task.getException());
+                            Toast.makeText(UserCreate.this, R.string.create_user_failed, Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Log.d("EmailPassword", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                            createUserDB(task.getResult().getUser());
+                        }
+                    }
+                });
+    }
+
 
     private void createUserDB(FirebaseUser user){
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
@@ -174,11 +183,7 @@ public class UserCreate extends AppCompatActivity implements AdapterView.OnItemS
 
         root.child("User_Accounts").child("User_ID").updateChildren(user_info);
         root.child("All_Accounts_Basic_Info").child("User_ID").updateChildren(account_info);
-        /*
-            Possible alternative if newUser.account_type is changed to "User_Accounts"
-            >>  root.child("All_Accounts").child(newUser.account_type).updateChildren(user_info);
-            <<  linked-7b9db > All_Accounts > User_Account > UserID > userinfo
-        */
+
         startActivity(new Intent(UserCreate.this, UserMenu.class));
     }
 
