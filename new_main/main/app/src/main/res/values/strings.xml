@@ -7,10 +7,12 @@
     <string name="business_create">Business Account Creation</string>
     <string name="business_address">Business Address</string>
     <string name="business_name">Business Name</string>
+    <string name="chat">Chat</string>
     <string name="create_user_failed">Email already in use.</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="email">Email Address</string>
     <string name="empty_field">Missing required information.</string>
+    <string name="find_activities">Find Activities</string>
     <string name="full">Full Name</string>
     <string name="invalid_address">Invalid address.</string>
     <string name="offer_activity">What activities are you offering?</string>
@@ -19,6 +21,7 @@
     <string name="pw_mismatch">Password mismatch.</string>
     <string name="select_category">Select a Category</string>
     <string name="select_activity">Select an Activity</string>
+    <string name="settings">Settings</string>
     <string name="signin">Sign In</string>
     <string name="signup">Sign Up</string>
     <string name="signout">Sign Out</string>
@@ -30,6 +33,7 @@
     <string name="username">Username</string>
     <string name="test_btn">Owner Menu</string>
     <string name="view_delete_act">View/Edit Activities</string>
+    <string name="view_history">View History</string>
     <string name="send_to">Share</string>
 
     <string-array name="business_type_array">
