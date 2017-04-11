@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,17 +16,23 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import android.net.Uri;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class BusinessCreate extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,6 +40,9 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
     EditText fullname, email, business, address, password, confirm;
     ImageButton img_button;
     Button submit_button;
+    Uri uri;    //store image
+    StorageReference mStorage = FirebaseStorage.getInstance().getReference();
+
 
     // Firebase Declarations
     private FirebaseAuth mAuth;
@@ -67,9 +77,11 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
         img_button = (ImageButton) findViewById(R.id.imageButton2);
         submit_button = (Button) findViewById(R.id.submitButton);
 
+
         // When a click event happens, onClick method is called (implements the interface)
         img_button.setOnClickListener(this);
         submit_button.setOnClickListener(this);
+
     }
 
     @Override
@@ -105,6 +117,21 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
             }
         }
     }
+
+    //store image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            uri = data.getData();
+            try {
+                img_button.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(),uri));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public boolean invalidAddress(String address){
         //converting addresses into Lat/Long
@@ -203,6 +230,14 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
 
         //storing the User_ID in a static variable so it can be accessed from any page
         static_variable_CLASS.User_ID = user.getUid();
+
+        //store image to firebase
+        StorageReference filepath = mStorage.child(static_variable_CLASS.User_ID).child(uri.getLastPathSegment());
+        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            }
+        });
 
         root.child("Business_Accounts").child("User_ID").updateChildren(business_info);
         root.child("Business_Accounts").child("User_ID").child(user.getUid()).child("activity_List").setValue("No activities");

@@ -18,12 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class CardFragment extends Fragment {
 
     ArrayList<LocationModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
-    String Wonders[] = {"Gym", "Restaurant", "Park", "Arcade", "Bookstore", "Library", "Movie Theater"};
     int Images[] = {R.drawable.gym, R.drawable.restaurant, R.drawable.park, R.drawable.arcade, R.drawable.bookstore, R.drawable.library, R.drawable.movie_theater};
+    private static final String TAG = "CardFragment";
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +49,8 @@ public class CardFragment extends Fragment {
             MyRecyclerView.setAdapter(new MyAdapter(listitems));
         }
         MyRecyclerView.setLayoutManager(MyLayoutManager);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+		
+		FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,11 +161,11 @@ public class CardFragment extends Fragment {
 
     public void initializeList() {
         listitems.clear();
+        String Wonders[] = new String[UserMenu.businesses.size()];
 
-        for (int i = 0; i < 7; i++) {
-
-
+        for (int i = 0; i < UserMenu.businesses.size(); i++) {
             LocationModel item = new LocationModel();
+            Wonders[i] = UserMenu.businesses.get(i);
             item.setCardName(Wonders[i]);
             item.setImageResourceId(Images[i]);
             item.setIsfav(0);
