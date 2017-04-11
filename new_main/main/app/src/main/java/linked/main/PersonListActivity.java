@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -27,13 +28,16 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class PersonListActivity extends AppCompatActivity {
+public class PersonListActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+    private String selectedActivity = "Selected Activity";                          //***Name of Activity selected goes here
+    protected Button checkinBtn;
+    private boolean isCheckIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +46,13 @@ public class PersonListActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
+        getSupportActionBar().setTitle("Others interested in " + selectedActivity);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)           //***Refreshing for new People interested in Actitivty goes here
                         .setAction("Action", null).show();
             }
         });
@@ -64,8 +68,28 @@ public class PersonListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
+        checkinBtn = (Button) findViewById(R.id.Checkin);
+        checkinBtn.setOnClickListener(this);
     }
 
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.Checkin:
+                if(isCheckIn == false) {
+                    isCheckIn = true;
+                    ((Button) findViewById(R.id.Checkin)).setText("Not Interested");
+                                                                                                    //*** Put user in the Activity
+                }else{
+                    isCheckIn = false;
+                    ((Button) findViewById(R.id.Checkin)).setText("Interested");
+                                                                                                    //*** Drop user out the Activity
+                }
+                break;
+            default:
+                break;
+        }
+    }
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(Person.ITEMS));
     }

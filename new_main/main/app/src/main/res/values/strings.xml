@@ -35,6 +35,7 @@
     <string name="view_delete_act">View/Edit Activities</string>
     <string name="view_history">View History</string>
     <string name="send_to">Share</string>
+    <string name="checkin">Interested</string>
 
     <string-array name="business_type_array">
         <item name="business_title">Business Type</item>
@@ -118,6 +119,5 @@
     </string-array>
     <string name="title_business_list">Businesses</string>
     <string name="title_business_detail">Business Detail</string>
-    <string name="title_person_list">People</string>
     <string name="title_person_detail">Person Detail</string>
 </resources>
