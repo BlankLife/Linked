@@ -45,8 +45,10 @@
         <activity android:name=".CardFragment" />
         <activity android:name=".LocationActivity" />
         <activity
+            android:name=".ActivityListActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".PersonListActivity"
-            android:label="@string/title_person_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".PersonDetailActivity"
