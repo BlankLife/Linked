@@ -99,6 +99,8 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
             startActivity(new Intent(this, LocationActivity.class));
         else if (v == view_act)
             startActivity(new Intent(this, BusinessActivities.class));
+        else if (v == chat)
+            startActivity(new Intent(this, MessagingActivity.class));
     }
 
 
