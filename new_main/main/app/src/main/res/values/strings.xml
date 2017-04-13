@@ -120,4 +120,5 @@
     <string name="title_business_list">Businesses</string>
     <string name="title_business_detail">Business Detail</string>
     <string name="title_person_detail">Person Detail</string>
+    <string name="title_activity_messaging">MessagingActivity</string>
 </resources>
