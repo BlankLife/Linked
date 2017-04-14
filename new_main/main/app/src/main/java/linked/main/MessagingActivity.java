@@ -17,7 +17,7 @@ import com.sinch.android.rtc.messaging.MessageFailureInfo;
 
 import java.util.List;
 
-public class MessagingActivity extends Start implements MessageClientListener{
+public class MessagingActivity extends SinchMain implements MessageClientListener{
 
     private static final String TAG = MessagingActivity.class.getSimpleName();
 
