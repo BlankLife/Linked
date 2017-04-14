@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Start extends AppCompatActivity implements View.OnClickListener, ServiceConnection {
+public class Start extends AppCompatActivity implements View.OnClickListener {
 
     //Layout Declarations
     EditText username, password;
@@ -42,15 +42,10 @@ public class Start extends AppCompatActivity implements View.OnClickListener, Se
     //Firebase Declarations
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-    //Sinch Declarations
-    private SinchService.SinchServiceInterface mSinchServiceInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        getApplicationContext().bindService(new Intent(this, SinchService.class), this,
-                BIND_AUTO_CREATE);
         //Firebase
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -183,33 +178,6 @@ public class Start extends AppCompatActivity implements View.OnClickListener, Se
                         }
                     });
         }
-    }
-    @Override
-    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-        if (SinchService.class.getName().equals(componentName.getClassName())) {
-            mSinchServiceInterface = (SinchService.SinchServiceInterface) iBinder;
-            onServiceConnected();
-        }
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName componentName) {
-        if (SinchService.class.getName().equals(componentName.getClassName())) {
-            mSinchServiceInterface = null;
-            onServiceDisconnected();
-        }
-    }
-
-    protected void onServiceConnected() {
-        // for subclasses
-    }
-
-    protected void onServiceDisconnected() {
-        // for subclasses
-    }
-
-    protected SinchService.SinchServiceInterface getSinchServiceInterface() {
-        return mSinchServiceInterface;
     }
 }
 
