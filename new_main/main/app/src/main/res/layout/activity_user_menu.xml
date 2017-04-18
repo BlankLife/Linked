@@ -13,78 +13,73 @@
 
     <ImageView
         android:id="@+id/findImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="86dp"
-        android:clickable="true"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         app:srcCompat="@drawable/activities_logo"
+        android:layout_marginTop="64dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp" />
 
     <ImageView
         android:id="@+id/viewImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/history_logo"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
-        android:layout_marginRight="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        app:srcCompat="@drawable/profile_logo"
         android:layout_alignTop="@+id/findImageView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignLeft="@+id/logoutImageView"
+        android:layout_alignStart="@+id/logoutImageView" />
 
     <ImageView
         android:id="@+id/chatImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         app:srcCompat="@drawable/chat_logo"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
-        android:layout_alignTop="@+id/settingsImageView"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/findTextView"
         android:layout_alignLeft="@+id/findTextView"
         android:layout_alignStart="@+id/findTextView" />
 
     <ImageView
-        android:id="@+id/settingsImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/settings_logo"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/viewTextView"
-        android:layout_alignLeft="@+id/viewTextView"
-        android:layout_alignStart="@+id/viewTextView" />
+        android:id="@+id/logoutImageView"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        app:srcCompat="@drawable/logout_logo"
+        android:layout_marginRight="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_alignTop="@+id/chatImageView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/findTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/find_activities"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="13dp"
         android:textAlignment="center"
         android:textColor="@color/prim_blue"
         android:textSize="18sp"
         android:layout_below="@+id/findImageView"
         android:layout_alignLeft="@+id/findImageView"
-        android:layout_alignStart="@+id/findImageView" />
+        android:layout_alignStart="@+id/findImageView"
+        android:layout_alignRight="@+id/findImageView"
+        android:layout_alignEnd="@+id/findImageView" />
 
     <TextView
         android:id="@+id/viewTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/view_history"
+        android:text="@string/edit_profile"
         android:textColor="@color/prim_blue"
         android:textSize="18sp"
         android:textAlignment="center"
         android:layout_alignBaseline="@+id/findTextView"
         android:layout_alignBottom="@+id/findTextView"
+        android:layout_alignRight="@+id/viewImageView"
+        android:layout_alignEnd="@+id/viewImageView"
         android:layout_alignLeft="@+id/viewImageView"
         android:layout_alignStart="@+id/viewImageView" />
 
@@ -92,7 +87,7 @@
         android:id="@+id/chatTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="12dp"
         android:text="@string/chat"
         android:textColor="@color/prim_blue"
         android:textSize="18sp"
@@ -100,20 +95,21 @@
         android:layout_below="@+id/chatImageView"
         android:layout_alignLeft="@+id/chatImageView"
         android:layout_alignStart="@+id/chatImageView"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp" />
+        android:layout_alignRight="@+id/chatImageView"
+        android:layout_alignEnd="@+id/chatImageView" />
 
     <TextView
         android:id="@+id/settingsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/settingsImageView"
-        android:layout_alignStart="@+id/settingsImageView"
         android:layout_alignTop="@+id/chatTextView"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp"
-        android:text="@string/settings"
+        android:text="@string/signout"
         android:textColor="@color/prim_blue"
         android:textSize="18sp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:layout_alignBottom="@+id/chatTextView"
+        android:layout_alignLeft="@+id/logoutImageView"
+        android:layout_alignStart="@+id/logoutImageView"
+        android:layout_alignRight="@+id/logoutImageView"
+        android:layout_alignEnd="@+id/logoutImageView" />
 </RelativeLayout>

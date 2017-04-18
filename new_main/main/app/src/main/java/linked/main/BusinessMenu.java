@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,11 +57,11 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
      }
      */
 
-    protected Button selectActivitiesBtn;
-    protected Button editBusinessBtn;
+    //protected Button selectActivitiesBtn;
     protected TextView businessName;
-    protected TextView businessAddress, signout;
+    protected TextView businessAddress;
     protected String[] activity = {};                           //******Retrieved Activities from DataBase in String Array GOES HERE
+    protected ImageView selectActivitiesBtn, editBusinessBtn, infoButton, signout;
 
     protected ArrayList<String> selectedActivities = new ArrayList<>();
     private String nameText = static_variable_CLASS.bname;                              //******Variable to hold Business Name
@@ -100,19 +102,22 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         addressText = static_variable_CLASS.baddress;               //******Retrieve Business Address from Database HERE
 
 
-        businessName = (TextView) findViewById(R.id.businessName);
+        /*businessName = (TextView) findViewById(R.id.businessName);
         businessAddress = (TextView) findViewById(R.id.businessAddress);
 
         businessName.setText(nameText);
-        businessAddress.setText(addressText);
+        businessAddress.setText(addressText);*/
 
-        editBusinessBtn = (Button) findViewById(R.id.editBusiness);
+        editBusinessBtn = (ImageView) findViewById(R.id.editImageView);
         editBusinessBtn.setOnClickListener(this);
 
-        selectActivitiesBtn = (Button) findViewById(R.id.viewEditActs);
+        selectActivitiesBtn = (ImageView) findViewById(R.id.activitiesImageView);
         selectActivitiesBtn.setOnClickListener(this);
 
-        signout = (TextView) findViewById(R.id.signoutButton);
+        infoButton = (ImageView) findViewById(R.id.infoImageView);
+        infoButton.setOnClickListener(this);
+
+        signout = (ImageView) findViewById(R.id.signoutImageView);
         signout.setOnClickListener(this);
 
 
@@ -125,10 +130,13 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view) {
         switch(view.getId()) {
-            case R.id.viewEditActs:
+            case R.id.activitiesImageView:
                 showSelectActivitiesDialog();
                 break;
-            case R.id.editBusiness:
+            case R.id.infoImageView:
+                showViewInfoDialog();
+                break;
+            case R.id.editImageView:
                 try {
                     showEditBusinessDialog();
                     break;
@@ -137,7 +145,7 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
 
-            case R.id.signoutButton:
+            case R.id.signoutImageView:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(BusinessMenu.this, Start.class));
                 break;
@@ -300,6 +308,23 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                     }
                 });
         AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    protected void showViewInfoDialog() {
+        AlertDialog.Builder viewInfo = new AlertDialog.Builder(this);
+        viewInfo.setTitle("My Business");
+        viewInfo
+                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .setMessage(nameText + "\n\n" + addressText);
+
+        AlertDialog dialog = viewInfo.create();
         dialog.show();
     }
 }

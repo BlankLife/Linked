@@ -84,7 +84,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
         view_act.setOnClickListener(this);
         chat =  (ImageView) findViewById(R.id.chatImageView);
         chat.setOnClickListener(this);
-        settings = (ImageView) findViewById(R.id.settingsImageView);
+        settings = (ImageView) findViewById(R.id.logoutImageView);
         settings.setOnClickListener(this);
     }
 

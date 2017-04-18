@@ -12,7 +12,7 @@ public class BusinessActivities extends AppCompatActivity implements View.OnClic
 
     Button art_button, food_button, sports_button, submit_button;
     TextView select_act, skip;
-    CheckBox box1, box2, box3, box4;
+    CheckBox box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,21 @@ public class BusinessActivities extends AppCompatActivity implements View.OnClic
         select_act.setVisibility(View.INVISIBLE);
 
         box1 = (CheckBox) findViewById(R.id.checkBox1);
-        box1.setVisibility(View.INVISIBLE);
         box2 = (CheckBox) findViewById(R.id.checkBox2);
-        box2.setVisibility(View.INVISIBLE);
         box3 = (CheckBox) findViewById(R.id.checkBox3);
-        box3.setVisibility(View.INVISIBLE);
         box4 = (CheckBox) findViewById(R.id.checkBox4);
-        box4.setVisibility(View.INVISIBLE);
+        box5 = (CheckBox) findViewById(R.id.checkBox5);
+        box6 = (CheckBox) findViewById(R.id.checkBox6);
+        box7 = (CheckBox) findViewById(R.id.checkBox7);
+        box8 = (CheckBox) findViewById(R.id.checkBox8);
+        box9 = (CheckBox) findViewById(R.id.checkBox9);
+        box10 = (CheckBox) findViewById(R.id.checkBox10);
+        box11 = (CheckBox) findViewById(R.id.checkBox11);
+        box12 = (CheckBox) findViewById(R.id.checkBox12);
+
+        makeInvisible(box1,box2,box3,box4);
+        makeInvisible(box5,box6,box7,box8);
+        makeInvisible(box9,box10,box11,box12);
 
         art_button = (Button) findViewById(R.id.artButton);
         art_button.setOnClickListener(this);
@@ -55,6 +63,8 @@ public class BusinessActivities extends AppCompatActivity implements View.OnClic
         else if (v == submit_button)
             startActivity(new Intent(BusinessActivities.this, BusinessMenu.class));
         else if (v == art_button){
+            makeInvisible(box5, box6, box7, box8);
+            makeInvisible(box9,box10,box11,box12);
             select_act.setVisibility(View.VISIBLE);
             box1.setText("Film");
             box1.setVisibility(View.VISIBLE);
@@ -66,26 +76,37 @@ public class BusinessActivities extends AppCompatActivity implements View.OnClic
             box4.setVisibility(View.VISIBLE);
         }
         else if (v == food_button){
+            makeInvisible(box1, box2, box3, box4);
+            makeInvisible(box9,box10,box11,box12);
             select_act.setVisibility(View.VISIBLE);
-            box1.setText("Bars");
-            box1.setVisibility(View.VISIBLE);
-            box2.setText("Dinner");
-            box2.setVisibility(View.VISIBLE);
-            box3.setText("Eating Contests");
-            box3.setVisibility(View.VISIBLE);
-            box4.setText("Wine Tasting");
-            box4.setVisibility(View.VISIBLE);
+            box5.setText("Bars");
+            box5.setVisibility(View.VISIBLE);
+            box6.setText("Dinner");
+            box6.setVisibility(View.VISIBLE);
+            box7.setText("Eating Contests");
+            box7.setVisibility(View.VISIBLE);
+            box8.setText("Wine Tasting");
+            box8.setVisibility(View.VISIBLE);
         }
         else if (v == sports_button) {
+            makeInvisible(box1,box2,box3,box4);
+            makeInvisible(box5,box6,box7,box8);
             select_act.setVisibility(View.VISIBLE);
-            box1.setText("Basketball");
-            box1.setVisibility(View.VISIBLE);
-            box2.setText("Golf");
-            box2.setVisibility(View.VISIBLE);
-            box3.setText("Soccer");
-            box3.setVisibility(View.VISIBLE);
-            box4.setText("Yoga");
-            box4.setVisibility(View.VISIBLE);
+            box9.setText("Basketball");
+            box9.setVisibility(View.VISIBLE);
+            box10.setText("Golf");
+            box10.setVisibility(View.VISIBLE);
+            box11.setText("Soccer");
+            box11.setVisibility(View.VISIBLE);
+            box12.setText("Yoga");
+            box12.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void makeInvisible(CheckBox b1, CheckBox b2, CheckBox b3, CheckBox b4){
+        b1.setVisibility(View.INVISIBLE);
+        b2.setVisibility(View.INVISIBLE);
+        b3.setVisibility(View.INVISIBLE);
+        b4.setVisibility(View.INVISIBLE);
     }
 }
