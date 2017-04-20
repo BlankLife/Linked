@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +25,22 @@ import static java.security.AccessController.getContext;
  */
 
 public class ActivityListActivity extends AppCompatActivity{
-    private List<String> activities =new ArrayList<>();                         //***List variable for the list of activities from location
-    private String BusinessName = "Business";                                   //***Assign variable to value retreived from Database
+    private List<String> activities = new ArrayList<>();                         //***List variable for the list of activities from location
+    private String BusinessName;
+    private static final String TAG = "CardFragment";
+    ArrayList<String> Activity_list;
+//***Assign variable to value retreived from Database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
-        activities.add("Activity1");
-        activities.add("Activity2");
+
+        Bundle extra = getIntent().getExtras();
+        BusinessName = extra.getString("NAME");
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Activities offered by " + BusinessName);
@@ -45,7 +52,7 @@ public class ActivityListActivity extends AppCompatActivity{
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(activities));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(CardFragment.activity));
     }
 
     public class SimpleItemRecyclerViewAdapter

@@ -85,8 +85,8 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                     List<String> current_activites = new ArrayList<>();
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     for (DataSnapshot c : children) {
-                        current_activites.add(c.getValue().toString());
-                        selectedActivities.add(c.getValue().toString());
+                        current_activites.add(c.getKey().toString());
+                        selectedActivities.add(c.getKey().toString());
                     }
                     activity = current_activites.toArray(new String[current_activites.size()]);
 
@@ -235,7 +235,7 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
         for(int i = 0; i < count; i++)
             checkedActivities[i] = !selectedActivities.contains(activity[i]);
 
-        DialogInterface.OnMultiChoiceClickListener activityDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+        final DialogInterface.OnMultiChoiceClickListener activityDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
@@ -276,8 +276,9 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                             if(db_activity_list.size() == 0)
                                 pathTObusiness.child("activity_List").setValue("No activities");
                             else
-                                pathTObusiness.child("activity_List").setValue(db_activity_list);
-
+                                for(int i =0; i < db_activity_list.size(); i++) {
+                                    pathTObusiness.child("activity_List").child(db_activity_list.get(i)).setValue("No person");
+                                }
                         }
                     }
                 })
@@ -292,8 +293,12 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                         DatabaseReference pathTObusiness = root.child("Business_Accounts").child("User_ID").child(static_variable_CLASS.User_ID);
                         if(db_activity_list.size() == 0)
                             pathTObusiness.child("activity_List").setValue("No activities");
-                        else
-                            pathTObusiness.child("activity_List").setValue(db_activity_list);
+                        else {
+                            pathTObusiness.child("activity_List").removeValue();
+                            for(int i =0; i < db_activity_list.size(); i++) {
+                                pathTObusiness.child("activity_List").child(db_activity_list.get(i)).setValue("No person");
+                            }
+                        }
                         dialog.dismiss();
                     }
                 })

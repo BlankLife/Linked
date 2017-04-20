@@ -17,15 +17,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CardFragment extends Fragment {
 
     ArrayList<LocationModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     int Images[] = {R.drawable.gym, R.drawable.restaurant, R.drawable.park, R.drawable.arcade, R.drawable.bookstore, R.drawable.library, R.drawable.movie_theater};
+
+    public static List<String> activity = new ArrayList<>();
     private static final String TAG = "CardFragment";
+    DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Business_Accounts").child("User_ID");
 
 
 
@@ -84,12 +94,43 @@ public class CardFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder, int position) {
+        public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
             holder.titleTextView.setText(list.get(position).getCardName());
             holder.coverImageView.setImageResource(list.get(position).getImageResourceId());
             holder.coverImageView.setTag(list.get(position).getImageResourceId());
             holder.likeImageView.setTag(R.drawable.ic_like);
+            holder.coverImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    root.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            activity.clear();
+                            if(dataSnapshot.child(UserMenu.bus_key.get(position)).child("activity_List").getValue() !=  "No activities")
+                            {
+                                    for(DataSnapshot snapshot : dataSnapshot.child(UserMenu.bus_key.get(position)).child("activity_List").getChildren() )
+                                    {
+                                        activity.add((String)snapshot.getKey());
+                                    }
+                                    //Log.d(TAG, "First");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    Intent i = new Intent(getContext(),ActivityListActivity.class);
+
+                    String business = list.get(position).getCardName();
+                    i.putExtra("NAME", business);
+
+
+                    startActivity(i);
+                }
+            });
 
         }
 
@@ -148,13 +189,13 @@ public class CardFragment extends Fragment {
                 }
             });
 
-            view = v;
+            /*view = v;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getContext(), ActivityListActivity.class));
                 }
-            });
+            });*/
 
         }
     }

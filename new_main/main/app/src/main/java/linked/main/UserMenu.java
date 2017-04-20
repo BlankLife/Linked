@@ -1,5 +1,6 @@
 package linked.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -39,6 +40,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
     ImageView find_act, view_act, chat, settings;
 
     public static ArrayList<String> businesses = new ArrayList<>();
+    public static ArrayList<String> bus_key = new ArrayList<>();
 
     private GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
@@ -152,18 +154,20 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
         //update current user location
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        Log.d(TAG,String.valueOf(latitude));
-        Log.d(TAG,String.valueOf(longitude));
+        //Log.d(TAG,String.valueOf(latitude));
+        //Log.d(TAG,String.valueOf(longitude));
         root.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 businesses.clear();
+                bus_key.clear();
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     //if within, save name of the business
                     if(distanceBetween(latitude,longitude,Double.valueOf((String)snapshot.child("latitude").getValue()),
                             Double.valueOf((String) snapshot.child("longitude").getValue())))
                     {
+                        bus_key.add(snapshot.getKey());
                         businesses.add((String) snapshot.child("business_name").getValue());
                     }
                 }
