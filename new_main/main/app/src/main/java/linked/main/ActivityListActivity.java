@@ -2,6 +2,7 @@ package linked.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,25 +32,33 @@ import static java.security.AccessController.getContext;
  */
 
 public class ActivityListActivity extends AppCompatActivity{
-    private List<String> activities = new ArrayList<>();                         //***List variable for the list of activities from location
+   // private List<String> activities = new ArrayList<>();                         ***List variable for the list of activities from location
     private String BusinessName;
+    public static List<String> people = new ArrayList<>();          //List of people under activity
+    public static List<String> people_key = new ArrayList<>();          //List of people under activity
     private static final String TAG = "CardFragment";
-    ArrayList<String> Activity_list;
-//***Assign variable to value retreived from Database
+    //***Assign variable to value retreived from Database
+    DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Business_Accounts").child("User_ID");
+    private String BusinessKey;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
-
         Bundle extra = getIntent().getExtras();
         BusinessName = extra.getString("NAME");
+        BusinessKey = extra.getString(BusinessName);
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Activities offered by " + BusinessName);
+
+
 
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
@@ -72,13 +87,39 @@ public class ActivityListActivity extends AppCompatActivity{
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder,final int position) {
 
             holder.mContentView.setText(mValues.get(position));
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(ActivityListActivity.this, PersonListActivity.class));
+                    /*
+                        pass info of people in the activities here to create holder for person
+                     */
+                    root.child(BusinessKey).child("activity_List").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            people.clear();
+                            people_key.clear();
+
+                            for (DataSnapshot snapshot : dataSnapshot.child(CardFragment.activity.get(position)).getChildren()) {
+                                if ( snapshot.getKey() != "Anonymous") {
+                                    Log.d(TAG, "Key is " + snapshot.getKey());
+                                    people.add((String) snapshot.getKey());  //add list of people under the activity atm
+                                    people_key.add((String)snapshot.getValue());
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    Intent i = new Intent(v.getContext() ,PersonListActivity.class);
+                    i.putExtra("activity", CardFragment.activity.get(position));
+                    i.putExtra("key", BusinessKey);
+                    startActivity(i);
                 }
             });
         }

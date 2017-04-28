@@ -113,7 +113,7 @@ public class CardFragment extends Fragment {
                                     {
                                         activity.add((String)snapshot.getKey());
                                     }
-                                    //Log.d(TAG, "First");
+                                    //Log.d(TAG, static_variable_CLASS.User_ID + " is userID");
                             }
                         }
 
@@ -125,9 +125,8 @@ public class CardFragment extends Fragment {
                     Intent i = new Intent(getContext(),ActivityListActivity.class);
 
                     String business = list.get(position).getCardName();
-                    i.putExtra("NAME", business);
-
-
+                    i.putExtra("NAME", business);                               //"NAME" - businessName
+                    i.putExtra(business, UserMenu.bus_key.get(position));       //"businessName" - key to access business
                     startActivity(i);
                 }
             });
@@ -188,15 +187,6 @@ public class CardFragment extends Fragment {
                     startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
                 }
             });
-
-            /*view = v;
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getContext(), ActivityListActivity.class));
-                }
-            });*/
-
         }
     }
 

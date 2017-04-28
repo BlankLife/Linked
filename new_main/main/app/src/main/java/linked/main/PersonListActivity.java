@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import linked.main.dummy.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,28 +42,75 @@ public class PersonListActivity extends AppCompatActivity implements View.OnClic
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+    private static final String TAG = "CardFragment";
+    public static List<String> info = new ArrayList<>();
     private boolean mTwoPane;
-    private String selectedActivity = "Selected Activity";                          //***Name of Activity selected goes here
-    protected Button checkinBtn;
     private boolean isCheckIn = false;
+    protected Button checkinBtn;
+    DatabaseReference root = FirebaseDatabase.getInstance().getReference();
 
+
+    private String selectedActivity;                         //***Name of Activity selected goes here
+    private String key;                                      //Business Key
+    private String UserName;                                 //userName of current user
+                                                             //user's key store in the static_variable_CLASS.User_ID
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_list);
 
+        Bundle extra = getIntent().getExtras();
+        selectedActivity = extra.getString("activity");
+        key = extra.getString("key");                       //business key
+
+        //Get userName for register under the activity
+       root.child("User_Accounts").child("User_ID").child(static_variable_CLASS.User_ID)
+                .child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserName = (String)dataSnapshot.getValue();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //toolbar layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Others interested in " + selectedActivity);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        //refresh button
+         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)           //***Refreshing for new People interested in Actitivty goes here
-                        .setAction("Action", null).show();
+                root.child("Business_Accounts").child("User_ID").child(key).child("activity_List")
+                        .child(selectedActivity).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ActivityListActivity.people.clear();
+
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if ( snapshot.getKey() != "Anonymous") {
+                                ActivityListActivity.people.add((String) snapshot.getKey());  //add list of people under the activity atm
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                View recyclerView = findViewById(R.id.person_list);
+                assert recyclerView != null;
+                setupRecyclerView((RecyclerView) recyclerView);
             }
         });
+
 
         View recyclerView = findViewById(R.id.person_list);
         assert recyclerView != null;
@@ -79,47 +134,53 @@ public class PersonListActivity extends AppCompatActivity implements View.OnClic
                 if(isCheckIn == false) {
                     isCheckIn = true;
                     ((Button) findViewById(R.id.Checkin)).setText("Not Interested");
-                                                                                                    //*** Put user in the Activity
+                    root.child("Business_Accounts").child("User_ID").child(key).child("activity_List")
+                            .child(selectedActivity).child(UserName).setValue(static_variable_CLASS.User_ID);
+
+                    //*** Put user in the Activity
                 }else{
                     isCheckIn = false;
                     ((Button) findViewById(R.id.Checkin)).setText("Interested");
-                                                                                                    //*** Drop user out the Activity
+                    root.child("Business_Accounts").child("User_ID").child(key).child("activity_List")
+                            .child(selectedActivity).child(UserName).removeValue();
+                    //*** Drop user out the Activity
                 }
                 break;
             default:
                 break;
         }
     }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(Person.ITEMS));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(ActivityListActivity.people));
     }
+
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private final List<Person.DummyItem> mValues;
+        private final List<String> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<Person.DummyItem> items) {
+        public SimpleItemRecyclerViewAdapter(List<String> items) {
             mValues = items;
         }
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.person_list_content, parent, false);
+                    .inflate(R.layout.activity_list_content, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
+        public void onBindViewHolder(final ViewHolder holder,final int position) {
             //holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            holder.mContentView.setText(mValues.get(position));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
+                public void onClick(final View v) {
+                    /*if (mTwoPane) {
                         Bundle arguments = new Bundle();
                         arguments.putString(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.id);
                         PersonDetailFragment fragment = new PersonDetailFragment();
@@ -128,14 +189,30 @@ public class PersonListActivity extends AppCompatActivity implements View.OnClic
                                 .replace(R.id.person_detail_container, fragment)
                                 .commit();
                     } else {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, PersonDetailActivity.class);
-                        intent.putExtra(PersonDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                    */
+                    root.child("User_Accounts").child("User_ID").child(ActivityListActivity.people_key.get(position))
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            info.clear();
+                            info.add((String) dataSnapshot.child("username").getValue());
+                            info.add((String) dataSnapshot.child("gender").getValue());
+                            info.add((String) dataSnapshot.child("year").getValue());
+                            info.add((String) dataSnapshot.child("month").getValue());
+                            nextActivity(v, position);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                        context.startActivity(intent);
+                        }
+                    });
                     }
-                }
-            });
+                });
+        }
+        public void nextActivity(View v, int pos){
+            Intent intent = new Intent(v.getContext(), PersonDetailActivity.class);
+            intent.putExtra("userName", ActivityListActivity.people.get(pos) );
+            startActivity(intent);
         }
 
         @Override
@@ -147,7 +224,7 @@ public class PersonListActivity extends AppCompatActivity implements View.OnClic
             public final View mView;
             //public final TextView mIdView;
             public final TextView mContentView;
-            public Person.DummyItem mItem;
+            //public Person.DummyItem mItem;
 
             public ViewHolder(View view) {
                 super(view);

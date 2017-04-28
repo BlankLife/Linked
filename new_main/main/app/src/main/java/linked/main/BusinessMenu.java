@@ -277,7 +277,7 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                                 pathTObusiness.child("activity_List").setValue("No activities");
                             else
                                 for(int i =0; i < db_activity_list.size(); i++) {
-                                    pathTObusiness.child("activity_List").child(db_activity_list.get(i)).setValue("No person");
+                                    pathTObusiness.child("activity_List").child(db_activity_list.get(i)).child("Anonymous").setValue("Null");
                                 }
                         }
                     }
@@ -296,7 +296,7 @@ public class BusinessMenu extends AppCompatActivity implements View.OnClickListe
                         else {
                             pathTObusiness.child("activity_List").removeValue();
                             for(int i =0; i < db_activity_list.size(); i++) {
-                                pathTObusiness.child("activity_List").child(db_activity_list.get(i)).setValue("No person");
+                                pathTObusiness.child("activity_List").child(db_activity_list.get(i)).child("Anonymous").setValue("Null");
                             }
                         }
                         dialog.dismiss();

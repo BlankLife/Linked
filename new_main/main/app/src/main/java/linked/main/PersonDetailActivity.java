@@ -56,10 +56,10 @@ public class PersonDetailActivity extends AppCompatActivity implements View.OnCl
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(PersonDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(PersonDetailFragment.ARG_ITEM_ID));
+            arguments.putString("userName", getIntent().getExtras().getString("userName"));
             PersonDetailFragment fragment = new PersonDetailFragment();
             fragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.person_detail_container, fragment)
                     .commit();
