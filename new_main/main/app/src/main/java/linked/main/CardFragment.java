@@ -2,8 +2,10 @@ package linked.main;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,23 +18,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.ArrayList;
-import java.util.List;
 
-import android.util.Log;
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class CardFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CardFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener{
 
     ArrayList<LocationModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     int Images[] = {R.drawable.gym, R.drawable.restaurant, R.drawable.park, R.drawable.arcade, R.drawable.bookstore, R.drawable.library, R.drawable.movie_theater};
 
+
+    private GoogleApiClient mGoogleApiClient;
+    LocationRequest mLocationRequest;
     public static List<String> activity = new ArrayList<>();
     private static final String TAG = "CardFragment";
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Business_Accounts").child("User_ID");
@@ -42,6 +50,10 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
         initializeList();
         getActivity().setTitle("Nearby Locations");
     }
@@ -66,6 +78,8 @@ public class CardFragment extends Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)           //Insert here for refreshing Nearby Locations
                         .setAction("Action", null).show();
+
+
             }
         });
         return view;
@@ -74,6 +88,26 @@ public class CardFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
 
     }
 

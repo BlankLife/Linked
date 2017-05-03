@@ -3,6 +3,7 @@ package linked.main;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import android.net.Uri;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -230,14 +228,6 @@ public class BusinessCreate extends AppCompatActivity implements View.OnClickLis
 
         //storing the User_ID in a static variable so it can be accessed from any page
         static_variable_CLASS.User_ID = user.getUid();
-
-        //store image to firebase
-        StorageReference filepath = mStorage.child(static_variable_CLASS.User_ID).child(uri.getLastPathSegment());
-        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-            }
-        });
 
         root.child("Business_Accounts").child("User_ID").updateChildren(business_info);
         root.child("Business_Accounts").child("User_ID").child(user.getUid()).child("activity_List").setValue("No activities");

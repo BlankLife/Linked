@@ -1,21 +1,21 @@
 package linked.main;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -49,6 +49,8 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
     private static final String TAG = "CardFragment";
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Business_Accounts").child("User_ID");
     StorageReference mStorage = FirebaseStorage.getInstance().getReference();
+
+    private String nameText = static_variable_CLASS.bname;                              //******Variable to hold User Name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,8 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
         if (v == find_act)
             startActivity(new Intent(this, LocationActivity.class));
         else if (v == view_act)
-            startActivity(new Intent(this, BusinessActivities.class));
+            //startActivity(new Intent(this, BusinessActivities.class));
+            showEditProfile();
         else if (v == chat)
             startActivity(new Intent(this, MessagingActivity.class));
     }
@@ -189,6 +192,44 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
         }
 
         return false;
+    }
+
+
+    protected void showEditProfile(){
+        final EditText nameInput = new EditText(this);
+        nameInput.setHint("Enter new username here.");
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(nameInput);
+
+        AlertDialog.Builder viewInfo = new AlertDialog.Builder(this);
+        viewInfo.setTitle("My Profile");
+        viewInfo
+                .setView(layout)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String tName="";
+                        tName = nameInput.getText().toString().trim();
+                        if(!tName.isEmpty()){
+                            nameText = tName;                   //******Update Business Name in Database HERE
+                            DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+                            root.child("User_Accounts").child("User_ID").child(static_variable_CLASS.User_ID).child("username").setValue(nameText);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = viewInfo.create();
+        dialog.show();
+
+
     }
 /*
     Bitmap getImage(String path){
