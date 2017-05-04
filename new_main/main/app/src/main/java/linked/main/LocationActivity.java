@@ -23,8 +23,6 @@ public class LocationActivity extends AppCompatActivity {
             fm.beginTransaction()
                     .add(R.id.fragmentContainer, fragment)
                     .commit();
-
-
         }
     }
 }

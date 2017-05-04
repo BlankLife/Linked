@@ -33,7 +33,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class UserMenu extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class UserMenu extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,LocationListener {
 
     TextView signout_button;
     ImageButton link_button, link_button3;
@@ -48,7 +48,6 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
     private double longitude;
     private static final String TAG = "CardFragment";
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Business_Accounts").child("User_ID");
-    StorageReference mStorage = FirebaseStorage.getInstance().getReference();
 
     private String nameText = static_variable_CLASS.bname;                              //******Variable to hold User Name
 
@@ -157,8 +156,7 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
         //update current user location
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        //Log.d(TAG,String.valueOf(latitude));
-        //Log.d(TAG,String.valueOf(longitude));
+
         root.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -231,10 +229,4 @@ public class UserMenu extends AppCompatActivity implements View.OnClickListener,
 
 
     }
-/*
-    Bitmap getImage(String path){
-
-
-    }
-*/
 }

@@ -32,15 +32,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener{
+public class CardFragment extends Fragment{
 
     ArrayList<LocationModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     int Images[] = {R.drawable.gym, R.drawable.restaurant, R.drawable.park, R.drawable.arcade, R.drawable.bookstore, R.drawable.library, R.drawable.movie_theater};
 
 
-    private GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
+
     public static List<String> activity = new ArrayList<>();
     private static final String TAG = "CardFragment";
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Business_Accounts").child("User_ID");
@@ -50,10 +49,6 @@ public class CardFragment extends Fragment implements GoogleApiClient.Connection
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
         initializeList();
         getActivity().setTitle("Nearby Locations");
     }
@@ -71,45 +66,18 @@ public class CardFragment extends Fragment implements GoogleApiClient.Connection
             MyRecyclerView.setAdapter(new MyAdapter(listitems));
         }
         MyRecyclerView.setLayoutManager(MyLayoutManager);
-		
+
 		FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)           //Insert here for refreshing Nearby Locations
-                        .setAction("Action", null).show();
-
-
+                //refreshing Nearby Locations
+                startActivity(new Intent(getActivity(), LocationActivity.class));
             }
         });
         return view;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
 
     public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         private ArrayList<LocationModel> list;
