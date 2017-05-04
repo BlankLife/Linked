@@ -2,8 +2,10 @@ package linked.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +29,7 @@ import linked.main.dummy.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * An activity representing a list of People. This activity
@@ -89,12 +92,13 @@ public class PersonListActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View view) {
                 root.child("Business_Accounts").child("User_ID").child(key).child("activity_List")
                         .child(selectedActivity).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ActivityListActivity.people.clear();
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            if ( snapshot.getKey() != "Anonymous") {
+                            if (!Objects.equals(snapshot.getKey(),"Anonymous")) {
                                 ActivityListActivity.people.add((String) snapshot.getKey());  //add list of people under the activity atm
                             }
                         }

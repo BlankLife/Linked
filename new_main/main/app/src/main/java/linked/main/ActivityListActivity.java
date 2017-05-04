@@ -3,8 +3,10 @@ package linked.main;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static java.security.AccessController.getContext;
 
@@ -97,13 +100,14 @@ public class ActivityListActivity extends AppCompatActivity{
                         pass info of people in the activities here to create holder for person
                      */
                     root.child(BusinessKey).child("activity_List").addValueEventListener(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             people.clear();
                             people_key.clear();
 
                             for (DataSnapshot snapshot : dataSnapshot.child(CardFragment.activity.get(position)).getChildren()) {
-                                if ( snapshot.getKey() != "Anonymous") {
+                                if ( !Objects.equals(snapshot.getKey(),"Anonymous")) {
                                     Log.d(TAG, "Key is " + snapshot.getKey());
                                     people.add((String) snapshot.getKey());  //add list of people under the activity atm
                                     people_key.add((String)snapshot.getValue());
